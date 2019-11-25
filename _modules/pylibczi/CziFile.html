@@ -188,7 +188,7 @@
 
 <span class="kn">import</span> <span class="nn">io</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="k">import</span> <span class="n">Path</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="k">import</span> <span class="n">Tuple</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="k">import</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">lxml</span> <span class="k">import</span> <span class="n">etree</span>
@@ -230,7 +230,7 @@
     <span class="c1">####</span>
     <span class="n">ZISRAW_DIMS</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Z&#39;</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="s1">&#39;T&#39;</span><span class="p">,</span> <span class="s1">&#39;R&#39;</span><span class="p">,</span> <span class="s1">&#39;S&#39;</span><span class="p">,</span> <span class="s1">&#39;I&#39;</span><span class="p">,</span> <span class="s1">&#39;H&#39;</span><span class="p">,</span> <span class="s1">&#39;V&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">}</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">czi_filename</span><span class="p">:</span> <span class="n">types</span><span class="o">.</span><span class="n">FileLike</span><span class="p">,</span> <span class="n">metafile_out</span><span class="p">:</span> <span class="n">types</span><span class="o">.</span><span class="n">PathLike</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">use_pylibczi</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">czi_filename</span><span class="p">:</span> <span class="n">types</span><span class="o">.</span><span class="n">FileLike</span><span class="p">,</span> <span class="n">metafile_out</span><span class="p">:</span> <span class="n">types</span><span class="o">.</span><span class="n">PathLike</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
                  <span class="n">verbose</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
         <span class="c1"># Convert to BytesIO (bytestream)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_bytes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">convert_to_buffer</span><span class="p">(</span><span class="n">czi_filename</span><span class="p">)</span>
@@ -242,10 +242,22 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">czilib</span> <span class="o">=</span> <span class="n">_pylibczi</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">reader</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">czilib</span><span class="o">.</span><span class="n">Reader</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_bytes</span><span class="p">)</span>
 
-<div class="viewcode-block" id="CziFile.dims"><a class="viewcode-back" href="../../pylibczi.html#pylibczi.CziFile.CziFile.dims">[docs]</a>    <span class="k">def</span> <span class="nf">dims</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">dims</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Get the dimensions for the opened file from the binary data (not the metadata</span>
-<span class="sd">        :return: A dictionary containing Dimension / depth, a file with 3 scenes, 7 time-points and 4 Z slices would have</span>
+<span class="sd">        Get the dimensions present the binary data (not the metadata)</span>
+<span class="sd">        Y and X are not included as the dims as they are required for any image block.</span>
+<span class="sd">        :return: A string containing Dimensions letters present</span>
+<span class="sd">        ::</span>
+<span class="sd">            &quot;STZ&quot;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">reader</span><span class="o">.</span><span class="n">read_dims_string</span><span class="p">()</span>
+
+<div class="viewcode-block" id="CziFile.dims_shape"><a class="viewcode-back" href="../../pylibczi.html#pylibczi.CziFile.CziFile.dims_shape">[docs]</a>    <span class="k">def</span> <span class="nf">dims_shape</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the dimensions for the opened file from the binary data (not the metadata)</span>
+<span class="sd">        :return: A dictionary containing Dimension / depth, a file with 3 scenes, 7 time-points</span>
+<span class="sd">        and 4 Z slices would have</span>
 <span class="sd">        ::</span>
 <span class="sd">            {&#39;S&#39;: 3, &#39;T&#39;: 7, &#39;Z&#39;:4}</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -259,9 +271,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">reader</span><span class="o">.</span><span class="n">is_mosaic</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="CziFile.convert_to_buffer"><a class="viewcode-back" href="../../pylibczi.html#pylibczi.CziFile.CziFile.convert_to_buffer">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">convert_to_buffer</span><span class="p">(</span><span class="n">file</span><span class="p">:</span> <span class="n">types</span><span class="o">.</span><span class="n">FileLike</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">io</span><span class="o">.</span><span class="n">BufferedIOBase</span><span class="p">:</span>
-        <span class="c1"># Check path</span>
-        <span class="nb">print</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">convert_to_buffer</span><span class="p">(</span><span class="n">file</span><span class="p">:</span> <span class="n">types</span><span class="o">.</span><span class="n">FileLike</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">types</span><span class="o">.</span><span class="n">BufferLike</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]:</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">)):</span>
             <span class="c1"># This will both fully expand and enforce that the filepath exists</span>
             <span class="n">f</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">file</span><span class="p">)</span><span class="o">.</span><span class="n">expanduser</span><span class="p">()</span><span class="o">.</span><span class="n">resolve</span><span class="p">(</span><span class="n">strict</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -309,12 +319,13 @@
 
 <div class="viewcode-block" id="CziFile.read_image"><a class="viewcode-back" href="../../pylibczi.html#pylibczi.CziFile.CziFile.read_image">[docs]</a>    <span class="k">def</span> <span class="nf">read_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">m_index</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Read the subblocks in the CZI file and for any subblocks that match all the constraints in kwargs return that data.</span>
-<span class="sd">        This allows you to select channels/scenes/timepoints/Z-slices etc.</span>
+<span class="sd">        Read the subblocks in the CZI file and for any subblocks that match all the constraints in kwargs return</span>
+<span class="sd">        that data. This allows you to select channels/scenes/time-points/Z-slices etc.</span>
 
-<span class="sd">        :param m_index: If it&#39;s a mosaic file and you wish to select specific M-indexs then use this otherwise ignore it.</span>
-<span class="sd">        :param kwargs: The keywords below allow you to specify the dimensions that you wish to match. If you underspecify</span>
-<span class="sd">            the constraints you can easily end up with a massive image stack. ::</span>
+<span class="sd">        :param m_index: If it&#39;s a mosaic file and you wish to select specific M-indexs then use this otherwise ignore</span>
+<span class="sd">        it.</span>
+<span class="sd">        :param kwargs: The keywords below allow you to specify the dimensions that you wish to match. If you</span>
+<span class="sd">            under-specify the constraints you can easily end up with a massive image stack. ::</span>
 <span class="sd">                       Z = 1   # The Z-dimension.</span>
 <span class="sd">                       C = 2   # The C-dimension (&quot;channel&quot;).</span>
 <span class="sd">                       T = 3   # The T-dimension (&quot;time&quot;).</span>
@@ -324,8 +335,8 @@
 <span class="sd">                       H = 7   # The H-dimension (&quot;phase&quot;).</span>
 <span class="sd">                       V = 8   # The V-dimension (&quot;view&quot;).</span>
 
-<span class="sd">        :returns: a tuple of (numpy.ndarray, a list of (Dimension, size)) the second element of the tuple is to make sure the numpy.ndarray</span>
-<span class="sd">            is interpretable. An example of the list is ::</span>
+<span class="sd">        :returns: a tuple of (numpy.ndarray, a list of (Dimension, size)) the second element of the tuple is to make</span>
+<span class="sd">            sure the numpy.ndarray is interpretable. An example of the list is ::</span>
 <span class="sd">                # [(&#39;S&#39;, 1), (&#39;T&#39;, 1), (&#39;C&#39;, 2), (&#39;Z&#39;, 25), (&#39;Y&#39;, 1024), (&#39;X&#39;, 1024)]</span>
 <span class="sd">            # so if you probed the numpy.ndarray with .shape you would get (1, 1, 2, 25, 1024, 1024).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
