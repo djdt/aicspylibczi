@@ -187,13 +187,13 @@
 <span class="c1"># Parent class for python wrapper to libczi file for accessing Zeiss czi image and metadata.</span>
 
 <span class="kn">import</span> <span class="nn">io</span>
-<span class="kn">from</span> <span class="nn">pathlib</span> <span class="k">import</span> <span class="n">Path</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="k">import</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">lxml</span> <span class="k">import</span> <span class="n">etree</span>
+<span class="kn">from</span> <span class="nn">lxml</span> <span class="kn">import</span> <span class="n">etree</span>
 
-<span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">types</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">types</span>
 
 
 <div class="viewcode-block" id="CziFile"><a class="viewcode-back" href="../../pylibczi.html#pylibczi.CziFile.CziFile">[docs]</a><span class="k">class</span> <span class="nc">CziFile</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
@@ -230,7 +230,7 @@
     <span class="c1">####</span>
     <span class="n">ZISRAW_DIMS</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Z&#39;</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="s1">&#39;T&#39;</span><span class="p">,</span> <span class="s1">&#39;R&#39;</span><span class="p">,</span> <span class="s1">&#39;S&#39;</span><span class="p">,</span> <span class="s1">&#39;I&#39;</span><span class="p">,</span> <span class="s1">&#39;H&#39;</span><span class="p">,</span> <span class="s1">&#39;V&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">}</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">czi_filename</span><span class="p">:</span> <span class="n">types</span><span class="o">.</span><span class="n">FileLike</span><span class="p">,</span> <span class="n">metafile_out</span><span class="p">:</span> <span class="n">types</span><span class="o">.</span><span class="n">PathLike</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">czi_filename</span><span class="p">:</span> <span class="n">types</span><span class="o">.</span><span class="n">FileLike</span><span class="p">,</span> <span class="n">metafile_out</span><span class="p">:</span> <span class="n">types</span><span class="o">.</span><span class="n">PathLike</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
                  <span class="n">verbose</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
         <span class="c1"># Convert to BytesIO (bytestream)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_bytes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">convert_to_buffer</span><span class="p">(</span><span class="n">czi_filename</span><span class="p">)</span>
@@ -300,7 +300,7 @@
         <span class="c1"># Raise</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
-                <span class="n">f</span><span class="s2">&quot;Reader only accepts types: [str, pathlib.Path, bytes, io.BytesIO], received: {type(file)}&quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;Reader only accepts types: [str, pathlib.Path, bytes, io.BytesIO], received: {type(file)}&quot;</span>
             <span class="p">)</span></div>
 
 <div class="viewcode-block" id="CziFile.read_meta"><a class="viewcode-back" href="../../pylibczi.html#pylibczi.CziFile.CziFile.read_meta">[docs]</a>    <span class="k">def</span> <span class="nf">read_meta</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
