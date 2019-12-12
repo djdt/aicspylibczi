@@ -184,9 +184,9 @@
 </div>
 <div class="section" id="aicspylibczi">
 <h1>aicspylibczi<a class="headerlink" href="#aicspylibczi" title="Permalink to this headline">¶</a></h1>
-<a class="reference external image-reference" href="https://github.com/AllenCellModeling/pylibczi/actions"><img alt="C++ Build &amp; Test" src="https://github.com/AllenCellModeling/pylibczi/workflows/C%2B%2B%20Master%20Build/badge.svg" /></a>
-<a class="reference external image-reference" href="https://github.com/AllenCellModeling/pylibczi/actions"><img alt="Python Build &amp; Test" src="https://github.com/AllenCellModeling/pylibczi/workflows/Python%20Master%20Build/badge.svg" /></a>
-<a class="reference external image-reference" href="https://codecov.io/gh/AllenCellModeling/pylibczi"><img alt="codecov" src="https://codecov.io/gh/AllenCellModeling/pylibczi/branch/feature/pybind11/graph/badge.svg" /></a>
+<a class="reference external image-reference" href="https://github.com/AllenCellModeling/aicspylibczi/actions"><img alt="C++ Build &amp; Test" src="https://github.com/AllenCellModeling/aicspylibczi/workflows/C%2B%2B%20Master%20Build/badge.svg" /></a>
+<a class="reference external image-reference" href="https://github.com/AllenCellModeling/aicspylibczi/actions"><img alt="Python Build &amp; Test" src="https://github.com/AllenCellModeling/aicspylibczi/workflows/Python%20Master%20Build/badge.svg" /></a>
+<a class="reference external image-reference" href="https://codecov.io/gh/AllenCellModeling/aicspylibczi"><img alt="codecov" src="https://codecov.io/gh/AllenCellModeling/aicspylibczi/branch/feature/pybind11/graph/badge.svg" /></a>
 <a class="reference external image-reference" href="https://www.gnu.org/licenses/gpl-3.0"><img alt="License: GPL v3" src="https://img.shields.io/badge/License-GPLv3-blue.svg" /></a>
 <p>Python module to expose <a class="reference external" href="https://github.com/zeiss-microscopy/libCZI">libCZI</a> functionality for reading (subset of) Zeiss CZI files and meta-data.</p>
 <div class="section" id="usage">
@@ -253,7 +253,7 @@
 <span class="kn">import</span> <span class="nn">pathlib</span>
 <span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
 
-<span class="n">mosaic_file</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;~/Data/20190618_CL001_HB01_Rescan_002.czi&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">expanduser</span><span class="p">()</span>
+<span class="n">mosaic_file</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;20190618_CL001_HB01_Rescan_002.czi&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">expanduser</span><span class="p">()</span>
 <span class="n">czi</span> <span class="o">=</span> <span class="n">aicspylibczi</span><span class="o">.</span><span class="n">CziFile</span><span class="p">(</span><span class="n">mosaic_file</span><span class="p">)</span>
 
 <span class="c1"># Get the shape of the data</span>
@@ -286,7 +286,7 @@ This will install the aicspylibczi python module and extension binaries (<a clas
 <div class="section" id="documentation">
 <h2>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h2>
 <p>Documentation is available at
-<a class="reference external" href="https://allencellmodeling.github.io/pylibczi">github.io</a> and
+<a class="reference external" href="https://allencellmodeling.github.io/aicspylibczi">github.io</a> and
 <a class="reference external" href="https://aicspylibczi.readthedocs.io/en/latest/index.html">readthedocs</a>.</p>
 </div>
 <div class="section" id="build">
