@@ -7,7 +7,11 @@ on:
 
 jobs:
   publish:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
+    strategy:
+      max-parallel: 6
+      matrix:
+        os: [windows-latest, macOS-latest]
     steps:
       - uses: actions/checkout@v1
         with:
@@ -23,6 +27,7 @@ jobs:
       - name: Build package
         run: |
           python setup.py sdist bdist_wheel
+
       - name: Publish to PyPI
         uses: pypa/gh-action-pypi-publish@master
         with:
