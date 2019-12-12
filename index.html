@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Welcome to pylibczi’s documentation! &mdash; aicsimageio 2.1.0 documentation</title>
+  <title>Welcome to aicspylibczi’s documentation! &mdash; aicspylibczi 2.1.0 documentation</title>
   
 
   
@@ -49,7 +49,7 @@
           
 
           
-            <a href="#" class="icon icon-home"> aicsimageio
+            <a href="#" class="icon icon-home"> aicspylibczi
           
 
           
@@ -92,11 +92,11 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="modules.html">Package modules</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="pylibczi.html">pylibczi package</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="pylibczi.html#submodules">Submodules</a></li>
-<li class="toctree-l3"><a class="reference internal" href="pylibczi.html#module-pylibczi.CziFile">pylibczi.CziFile module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="pylibczi.html#module-pylibczi.types">pylibczi.types module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="pylibczi.html#module-pylibczi">Module contents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="aicspylibczi.html">aicspylibczi package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="aicspylibczi.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="aicspylibczi.html#module-aicspylibczi.CziFile">aicspylibczi.CziFile module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="aicspylibczi.html#module-aicspylibczi.types">aicspylibczi.types module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="aicspylibczi.html#module-aicspylibczi">Module contents</a></li>
 </ul>
 </li>
 </ul>
@@ -120,7 +120,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="#">aicsimageio</a>
+          <a href="#">aicspylibczi</a>
         
       </nav>
 
@@ -151,7 +151,7 @@
     
       <li><a href="#">Docs</a> &raquo;</li>
         
-      <li>Welcome to pylibczi’s documentation!</li>
+      <li>Welcome to aicspylibczi’s documentation!</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -177,13 +177,13 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="welcome-to-pylibczi-s-documentation">
-<h1>Welcome to pylibczi’s documentation!<a class="headerlink" href="#welcome-to-pylibczi-s-documentation" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="welcome-to-aicspylibczi-s-documentation">
+<h1>Welcome to aicspylibczi’s documentation!<a class="headerlink" href="#welcome-to-aicspylibczi-s-documentation" title="Permalink to this headline">¶</a></h1>
 <div class="toctree-wrapper compound">
 </div>
 </div>
-<div class="section" id="pylibczi">
-<h1>pylibczi<a class="headerlink" href="#pylibczi" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="aicspylibczi">
+<h1>aicspylibczi<a class="headerlink" href="#aicspylibczi" title="Permalink to this headline">¶</a></h1>
 <a class="reference external image-reference" href="https://github.com/AllenCellModeling/pylibczi/actions"><img alt="C++ Build &amp; Test" src="https://github.com/AllenCellModeling/pylibczi/workflows/C%2B%2B%20Master%20Build/badge.svg" /></a>
 <a class="reference external image-reference" href="https://github.com/AllenCellModeling/pylibczi/actions"><img alt="Python Build &amp; Test" src="https://github.com/AllenCellModeling/pylibczi/workflows/Python%20Master%20Build/badge.svg" /></a>
 <a class="reference external image-reference" href="https://codecov.io/gh/AllenCellModeling/pylibczi"><img alt="codecov" src="https://codecov.io/gh/AllenCellModeling/pylibczi/branch/feature/pybind11/graph/badge.svg" /></a>
@@ -195,73 +195,103 @@
 <div class="section" id="example-1-read-in-a-czi-and-select-a-portion-of-the-image-to-display">
 <h3>Example 1:  Read in a czi and select a portion of the image to display<a class="headerlink" href="#example-1-read-in-a-czi-and-select-a-portion-of-the-image-to-display" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">pylibczi</span>
-<span class="kn">import</span> <span class="nn">pathlib</span>
+<span class="kn">from</span> <span class="nn">aicspylibczi</span> <span class="kn">import</span> <span class="n">CziFile</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
 <span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
 
-<span class="n">pth</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;/allen/aics/assay-dev/MicroscopyData/Sue/2019/20190610/20190610_S02-02.czi&#39;</span><span class="p">)</span>
-<span class="n">czi</span> <span class="o">=</span> <span class="n">pylibczi</span><span class="o">.</span><span class="n">CziFile</span><span class="p">(</span><span class="n">pth</span><span class="p">)</span>
+<span class="n">pth</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;20190610_S02-02.czi&#39;</span><span class="p">)</span>
+<span class="n">czi</span> <span class="o">=</span> <span class="n">CziFile</span><span class="p">(</span><span class="n">pth</span><span class="p">)</span>
 
 <span class="c1"># Get the shape of the data, the coordinate pairs are (start index, size)</span>
-<span class="n">dimensions</span> <span class="o">=</span> <span class="n">czi</span><span class="o">.</span><span class="n">dims</span><span class="p">()</span>  <span class="c1"># {&#39;Z&#39;: (0, 70), &#39;C&#39;: (0, 2), &#39;T&#39;: (0, 146), &#39;S&#39;: (0, 12), &#39;B&#39;: (0, 1)}</span>
+<span class="n">dimensions</span> <span class="o">=</span> <span class="n">czi</span><span class="o">.</span><span class="n">dims_shape</span><span class="p">()</span>  <span class="c1"># {&#39;Z&#39;: (0, 70), &#39;C&#39;: (0, 2), &#39;T&#39;: (0, 146), &#39;S&#39;: (0, 12), &#39;B&#39;: (0, 1)}</span>
+
+<span class="n">czi</span><span class="o">.</span><span class="n">dims</span>  <span class="c1">#  BSTCZYX</span>
+
+<span class="n">czi</span><span class="o">.</span><span class="n">size</span>  <span class="c1">#  (1, 12, 146, 2, 70, 1300, 1900)</span>
 
 <span class="c1"># Load the image slice I want from the file</span>
-<span class="n">img</span><span class="p">,</span> <span class="n">shp</span> <span class="o">=</span> <span class="n">czi</span><span class="o">.</span><span class="n">read_image</span><span class="p">(</span><span class="n">S</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">T</span><span class="o">=</span><span class="mi">11</span><span class="p">,</span> <span class="n">C</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">Z</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
+<span class="n">img</span><span class="p">,</span> <span class="n">shp</span> <span class="o">=</span> <span class="n">czi</span><span class="o">.</span><span class="n">read_image</span><span class="p">(</span><span class="n">S</span><span class="o">=</span><span class="mi">13</span><span class="p">,</span> <span class="n">Z</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
 
-<span class="c1"># shp = [(&#39;S&#39;, 1), (&#39;T&#39;, 1), (&#39;C&#39;, 1), (&#39;Z&#39;, 1), (&#39;Y&#39;, 1300), (&#39;X&#39;, 1900)]  # List[(Dimension, size), ...]</span>
-<span class="c1"># img.shape = (1, 1, 1, 1, 1300, 1900)   # numpy.ndarray</span>
+<span class="c1"># shp = [(&#39;B&#39;, 1), (&#39;S&#39;, 1), (&#39;C&#39;, 4), (&#39;Z&#39;, 1), (&#39;Y&#39;, 1300), (&#39;X&#39;, 1900)]  # List[(Dimension, size), ...]</span>
+<span class="c1"># img.shape = (1, 1, 4, 1, 1300, 1900)   # numpy.ndarray</span>
 
-<span class="c1"># Normalize the image</span>
-<span class="n">norm_by</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">img</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,],</span> <span class="p">[</span><span class="mi">50</span><span class="p">,</span> <span class="mf">99.8</span><span class="p">])</span>
+<span class="c1"># define helper functions</span>
+<span class="k">def</span> <span class="nf">norm_by</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">min</span><span class="p">,</span> <span class="nb">max</span><span class="p">):</span>
+    <span class="n">norms</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="p">[</span><span class="nb">min</span><span class="p">,</span> <span class="nb">max</span><span class="p">])</span>
+    <span class="n">i2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">((</span><span class="n">x</span> <span class="o">-</span> <span class="n">norms</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">/</span><span class="p">(</span><span class="n">norms</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">norms</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">i2</span>
+    <span class="k">return</span> <span class="n">i2</span>
 
-<span class="c1"># Scale the numpy array values and cast them back to integers in the 0 to 255 range</span>
-<span class="n">i2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">((</span><span class="n">img</span> <span class="o">-</span> <span class="n">norm_by</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">/</span><span class="p">(</span><span class="n">norm_by</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">norm_by</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="mi">255</span>
+<span class="k">def</span> <span class="nf">recolor</span><span class="p">(</span><span class="n">im</span><span class="p">):</span> <span class="c1"># transform from rgb to cyan-magenta-yellow</span>
+    <span class="n">im_shape</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">im</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+    <span class="n">color_transform</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span><span class="o">.</span><span class="n">T</span>
+    <span class="n">im_reshape</span> <span class="o">=</span> <span class="n">im</span><span class="o">.</span><span class="n">reshape</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">prod</span><span class="p">(</span><span class="n">im_shape</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">]),</span> <span class="n">im_shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]])</span><span class="o">.</span><span class="n">T</span>
+    <span class="n">im_recolored</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">color_transform</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">im_reshape</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+    <span class="n">im_shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="mi">3</span>
+    <span class="n">im</span> <span class="o">=</span> <span class="n">im_recolored</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">im_shape</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">im</span>
 
-<span class="n">img_disp</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">fromarray</span><span class="p">(</span><span class="n">i2</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">200</span><span class="p">:</span><span class="mi">1100</span><span class="p">,</span><span class="mi">500</span><span class="p">:</span><span class="mi">1000</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">))</span>
+<span class="c1">#normalize, combine into RGB and transform to CMY</span>
+<span class="n">c1</span> <span class="o">=</span> <span class="p">(</span><span class="n">norm_by</span><span class="p">(</span><span class="n">img</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">750</span><span class="p">,</span> <span class="mi">250</span><span class="p">:</span><span class="mi">1000</span><span class="p">],</span> <span class="mi">50</span><span class="p">,</span> <span class="mf">99.8</span><span class="p">)</span><span class="o">*</span><span class="mi">255</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span>
+<span class="n">c2</span> <span class="o">=</span> <span class="p">(</span><span class="n">norm_by</span><span class="p">(</span><span class="n">img</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">750</span><span class="p">,</span> <span class="mi">250</span><span class="p">:</span><span class="mi">1000</span><span class="p">],</span> <span class="mi">50</span><span class="p">,</span> <span class="mf">99.8</span><span class="p">)</span><span class="o">*</span><span class="mi">255</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span>
+<span class="n">c3</span> <span class="o">=</span> <span class="p">(</span><span class="n">norm_by</span><span class="p">(</span><span class="n">img</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">750</span><span class="p">,</span> <span class="mi">250</span><span class="p">:</span><span class="mi">1000</span><span class="p">],</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span><span class="o">*</span><span class="mi">255</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span>
+<span class="n">rgb</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">((</span><span class="n">c1</span><span class="p">,</span> <span class="n">c2</span><span class="p">,</span> <span class="n">c3</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">cmy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">recolor</span><span class="p">(</span><span class="n">rgb</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">)</span>
+
+<span class="c1"># plot using matplotlib¶</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">cmy</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-<a class="reference external image-reference" href="images/colony.png"><img alt="Colony Image" src="images/colony.png" /></a>
+<a class="reference external image-reference" href="images/cardio.png"><img alt="Colony Image" src="images/cardio.png" /></a>
 </div>
 <div class="section" id="example-2-read-in-a-mosaic-file">
 <h3>Example 2:  Read in a mosaic file<a class="headerlink" href="#example-2-read-in-a-mosaic-file" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">pylibczi</span>
+<span class="kn">import</span> <span class="nn">aicspylibczi</span>
 <span class="kn">import</span> <span class="nn">pathlib</span>
 <span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
 
 <span class="n">mosaic_file</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;~/Data/20190618_CL001_HB01_Rescan_002.czi&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">expanduser</span><span class="p">()</span>
-<span class="n">czi</span> <span class="o">=</span> <span class="n">pylibczi</span><span class="o">.</span><span class="n">CziFile</span><span class="p">(</span><span class="n">mosaic_file</span><span class="p">)</span>
+<span class="n">czi</span> <span class="o">=</span> <span class="n">aicspylibczi</span><span class="o">.</span><span class="n">CziFile</span><span class="p">(</span><span class="n">mosaic_file</span><span class="p">)</span>
 
 <span class="c1"># Get the shape of the data</span>
-<span class="n">dimensions</span> <span class="o">=</span> <span class="n">czi</span><span class="o">.</span><span class="n">dims</span><span class="p">()</span>   <span class="c1"># {&#39;C&#39;: (0, 5), &#39;S&#39;: (0, 16), &#39;B&#39;: (0, 1)}</span>
+<span class="n">dimensions</span> <span class="o">=</span> <span class="n">czi</span><span class="o">.</span><span class="n">dims</span>   <span class="c1">#  &#39;STCZMYX&#39;</span>
+
+<span class="n">czi</span><span class="o">.</span><span class="n">size</span>  <span class="c1"># (1, 1, 1, 1, 2, 624, 924)</span>
+
+<span class="n">czi</span><span class="o">.</span><span class="n">dims_shape</span><span class="p">()</span>  <span class="c1"># {&#39;C&#39;: (0, 0), &#39;M&#39;: (0, 1), &#39;S&#39;: (0, 0), &#39;T&#39;: (0, 0), &#39;X&#39;: (0, 923), &#39;Y&#39;: (0, 623), &#39;Z&#39;: (0, 0)}</span>
 
 <span class="n">czi</span><span class="o">.</span><span class="n">is_mosaic</span><span class="p">()</span>  <span class="c1"># True</span>
  <span class="c1"># Mosaic files ignore the S dimension and use an internal mIndex to reconstruct, the scale factor allows one to generate a manageable image</span>
-<span class="n">mosaic_data</span> <span class="o">=</span> <span class="n">czi</span><span class="o">.</span><span class="n">read_mosaic</span><span class="p">(</span><span class="n">C</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">scale_factor</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+<span class="n">mosaic_data</span> <span class="o">=</span> <span class="n">czi</span><span class="o">.</span><span class="n">read_mosaic</span><span class="p">(</span><span class="n">C</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">scale_factor</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
-<span class="n">mosaic_data</span><span class="o">.</span><span class="n">shape</span>  <span class="c1"># (1, 1, 6265, 6998)</span>
+<span class="n">mosaic_data</span><span class="o">.</span><span class="n">shape</span>  <span class="c1">#  (1, 1, 624, 1756)</span>
+ <span class="c1"># the C channel has been specified S &amp; M are used internally for position so this is (T, Z, Y, X)</span>
 
-<span class="n">norm_by</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">mosaic_data</span><span class="p">,</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">98</span><span class="p">])</span>
-<span class="n">normed_mosaic_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">((</span><span class="n">itwo</span> <span class="o">-</span> <span class="n">norm_by</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">/</span><span class="p">(</span><span class="n">norm_by</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">norm_by</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="mi">255</span>
-<span class="n">img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">fromarray</span><span class="p">(</span><span class="n">normed_mosaic_data</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span> <span class="mi">250</span><span class="p">:</span><span class="mi">750</span><span class="p">,</span> <span class="mi">250</span><span class="p">:</span><span class="mi">750</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">))</span>
+<span class="n">normed_mosaic_data</span> <span class="o">=</span> <span class="n">norm_by</span><span class="p">(</span><span class="n">mosaic_data</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:],</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">98</span><span class="p">)</span><span class="o">*</span><span class="mi">255</span>
+<span class="n">img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">fromarray</span><span class="p">(</span><span class="n">normed_mosaic_data</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">))</span>
 </pre></div>
 </div>
-<a class="reference external image-reference" href="images/histo.png"><img alt="Mosaic Histology Image" src="images/histo.png" /></a>
+<a class="reference external image-reference" href="images/mosaic.png"><img alt="Mosaic Image" src="images/mosaic.png" /></a>
 </div>
 </div>
 <div class="section" id="installation">
 <h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
 <p>The preferred installation method is with <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span></code>.
-This will install the pylibczi python module and extension binaries (<a class="reference external" href="https://pypi.org/project/pylibczi/">hosted on PyPI</a>):</p>
-<p><code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">pylibczi</span></code></p>
+This will install the aicspylibczi python module and extension binaries (<a class="reference external" href="https://pypi.org/project/aicspylibczi/">hosted on PyPI</a>):</p>
+<p><code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">aicspylibczi</span></code></p>
 </div>
 <div class="section" id="documentation">
 <h2>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h2>
-<p><a class="reference external" href="https://pylibczi.readthedocs.io/en/latest/index.html">Documentation</a> is available on readthedocs.</p>
+<p>Documentation is available at
+<a class="reference external" href="https://allencellmodeling.github.io/pylibczi">github.io</a> and
+<a class="reference external" href="https://aicspylibczi.readthedocs.io/en/latest/index.html">readthedocs</a>.</p>
 </div>
 <div class="section" id="build">
 <h2>Build<a class="headerlink" href="#build" title="Permalink to this headline">¶</a></h2>
-<p>Use these steps to build and install pylibczi locally:</p>
+<p>Use these steps to build and install aicspylibczi locally:</p>
 <ul>
 <li><p>Clone the repository including submodules (<code class="docutils literal notranslate"><span class="pre">--recurse-submodules</span></code>).</p></li>
 <li><p>Requirements:</p>
@@ -276,10 +306,16 @@ pip install -e .[dev] # for development (-e means editable so changes take effec
 pip install .[all] # for everything including jupyter notebook to work with the Example_Usage above</p>
 </div></blockquote>
 </li>
-<li><p>libCZI is automatically built as a submodule and linked statically into pylibczi.</p></li>
+<li><p>libCZI is automatically built as a submodule and linked statically into aicspylibczi.</p></li>
 </ul>
 </li>
-<li><p>Note: If you get the message <code class="docutils literal notranslate"><span class="pre">EXEC</span> <span class="pre">:</span> <span class="pre">Fatal</span> <span class="pre">Python</span> <span class="pre">error</span> <span class="pre">:</span> <span class="pre">initfsencoding:</span> <span class="pre">unable</span> <span class="pre">to</span> <span class="pre">load</span> <span class="pre">the</span> <span class="pre">file</span> <span class="pre">system</span> <span class="pre">codec</span> <span class="pre">...</span> <span class="pre">ModuleNotFoundError:</span> <span class="pre">No</span> <span class="pre">module</span> <span class="pre">named</span> <span class="pre">'encodings'</span></code> on windows you need to set PYTHONHOME to be the folder the python.exe you are compiling against lives in.</p></li>
+<li><p>Note: If you get the message directly below on windows you need to set PYTHONHOME to be the folder the python.exe you are compiling against lives in.
+.. code-block:: guess</p>
+<blockquote>
+<div><p>EXEC : Fatal Python error : initfsencoding: unable to load the file system codec …
+ModuleNotFoundError: No module named ‘encodings’</p>
+</div></blockquote>
+</li>
 </ul>
 </div>
 <div class="section" id="license">
