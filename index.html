@@ -197,7 +197,7 @@
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">aicspylibczi</span> <span class="kn">import</span> <span class="n">CziFile</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
-<span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 
 <span class="n">pth</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;20190610_S02-02.czi&#39;</span><span class="p">)</span>
 <span class="n">czi</span> <span class="o">=</span> <span class="n">CziFile</span><span class="p">(</span><span class="n">pth</span><span class="p">)</span>
@@ -252,6 +252,7 @@
 <span class="kn">import</span> <span class="nn">aicspylibczi</span>
 <span class="kn">import</span> <span class="nn">pathlib</span>
 <span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
+
 
 <span class="n">mosaic_file</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;20190618_CL001_HB01_Rescan_002.czi&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">expanduser</span><span class="p">()</span>
 <span class="n">czi</span> <span class="o">=</span> <span class="n">aicspylibczi</span><span class="o">.</span><span class="n">CziFile</span><span class="p">(</span><span class="n">mosaic_file</span><span class="p">)</span>
@@ -322,6 +323,14 @@ ModuleNotFoundError: No module named ‘encodings’</p>
 <h2>License<a class="headerlink" href="#license" title="Permalink to this headline">¶</a></h2>
 <p>The GPLv3 license is a consequence of libCZI which imposes GPLv3. If you wish to use libCZI or this derivative in
 a commercial product you’ll need to talk to Zeiss.</p>
+</div>
+<div class="section" id="history">
+<h2>History<a class="headerlink" href="#history" title="Permalink to this headline">¶</a></h2>
+<p>aicspylibczi was originally a fork of <a class="reference external" href="https:://github.com/elhuhdron/pylibczi">pylibczi</a> that was developed by
+Paul Watkins and focused on mSEM data. In attempting to extend the work to we transitioned
+to pybind11, implemented c++ and python tests, added continuous integration via github actions,
+and added the functionality to read individual subblocks and stacks of subblocks as a numpy.ndarray.
+Metadata reading, including specific subblock metadata reading has also been added.</p>
 </div>
 </div>
 <div class="section" id="indices-and-tables">
