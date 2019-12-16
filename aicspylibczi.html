@@ -376,7 +376,7 @@ constraints are underspecified the function will fail.</p>
 
 <dl class="method">
 <dt id="aicspylibczi.CziFile.CziFile.read_subblock_metadata">
-<code class="sig-name descname">read_subblock_metadata</code><span class="sig-paren">(</span><em class="sig-param">m_index: int = -1</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicspylibczi/CziFile.html#CziFile.read_subblock_metadata"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicspylibczi.CziFile.CziFile.read_subblock_metadata" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">read_subblock_metadata</code><span class="sig-paren">(</span><em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicspylibczi/CziFile.html#CziFile.read_subblock_metadata"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicspylibczi.CziFile.CziFile.read_subblock_metadata" title="Permalink to this definition">¶</a></dt>
 <dd><p>Read the subblock specific metadata, ie time subblock was aquired / position at aquisition time etc.</p>
 <dl class="field-list">
 <dt class="field-odd">Parameters</dt>
@@ -392,7 +392,8 @@ R = 4   # The R-dimension (“rotation”).
 S = 5   # The S-dimension (“scene”).
 I = 6   # The I-dimension (“illumination”).
 H = 7   # The H-dimension (“phase”).
-V = 8   # The V-dimension (“view”).</p>
+V = 8   # The V-dimension (“view”).
+M = 10  # The M_index, this is only valid for Mosaic files!</p>
 </div></blockquote>
 </li>
 </ul>
@@ -653,7 +654,7 @@ constraints are underspecified the function will fail.</p>
 
 <dl class="method">
 <dt id="aicspylibczi.CziFile.read_subblock_metadata">
-<code class="sig-name descname">read_subblock_metadata</code><span class="sig-paren">(</span><em class="sig-param">m_index: int = -1</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicspylibczi/CziFile.html#CziFile.read_subblock_metadata"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicspylibczi.CziFile.read_subblock_metadata" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">read_subblock_metadata</code><span class="sig-paren">(</span><em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicspylibczi/CziFile.html#CziFile.read_subblock_metadata"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicspylibczi.CziFile.read_subblock_metadata" title="Permalink to this definition">¶</a></dt>
 <dd><p>Read the subblock specific metadata, ie time subblock was aquired / position at aquisition time etc.</p>
 <dl class="field-list">
 <dt class="field-odd">Parameters</dt>
@@ -669,7 +670,8 @@ R = 4   # The R-dimension (“rotation”).
 S = 5   # The S-dimension (“scene”).
 I = 6   # The I-dimension (“illumination”).
 H = 7   # The H-dimension (“phase”).
-V = 8   # The V-dimension (“view”).</p>
+V = 8   # The V-dimension (“view”).
+M = 10  # The M_index, this is only valid for Mosaic files!</p>
 </div></blockquote>
 </li>
 </ul>
