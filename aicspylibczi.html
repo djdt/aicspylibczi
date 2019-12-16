@@ -304,15 +304,10 @@ M = 10  # The M_index, this is only valid for Mosaic files!</p>
 </div></blockquote>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><p>a tuple of (numpy.ndarray, a list of (Dimension, size)) the second element of the tuple is to make
-sure the numpy.ndarray is interpretable. An example of the list is</p>
-<blockquote>
-<div><blockquote>
-<div><p>[(‘S’, 1), (‘T’, 1), (‘C’, 2), (‘Z’, 25), (‘Y’, 1024), (‘X’, 1024)]</p>
-</div></blockquote>
-<p>so if you probed the numpy.ndarray with .shape you would get (1, 1, 2, 25, 1024, 1024).</p>
-</div></blockquote>
-</p>
+<dd class="field-even"><p>a tuple of (numpy.ndarray, a list of (Dimension, size)) the second element of the tuple is to make
+sure the numpy.ndarray is interpretable. An example of the list is
+[(‘S’, 1), (‘T’, 1), (‘C’, 2), (‘Z’, 25), (‘Y’, 1024), (‘X’, 1024)]
+so if you probed the numpy.ndarray with .shape you would get (1, 1, 2, 25, 1024, 1024).</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>(numpy.ndarray, [Dimension, Size])</p>
@@ -377,12 +372,10 @@ constraints are underspecified the function will fail.</p>
 <dl class="method">
 <dt id="aicspylibczi.CziFile.CziFile.read_subblock_metadata">
 <code class="sig-name descname">read_subblock_metadata</code><span class="sig-paren">(</span><em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicspylibczi/CziFile.html#CziFile.read_subblock_metadata"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicspylibczi.CziFile.CziFile.read_subblock_metadata" title="Permalink to this definition">¶</a></dt>
-<dd><p>Read the subblock specific metadata, ie time subblock was aquired / position at aquisition time etc.</p>
+<dd><p>Read the subblock specific metadata, ie time subblock was acquired / position at acquisition time etc.</p>
 <dl class="field-list">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul>
-<li><p><strong>m_index</strong> – If it’s a mosaic file and you wish to select specific M-index then use this otherwise ignore it.</p></li>
-<li><p><strong>kwargs</strong> – The keywords below allow you to specify the dimensions that you wish to match. If you
+<dd class="field-odd"><p><strong>kwargs</strong> – The keywords below allow you to specify the dimensions that you wish to match. If you
 under-specify the constraints you can easily end up with a massive image stack.</p>
 <blockquote>
 <div><p>Z = 1   # The Z-dimension.
@@ -395,8 +388,6 @@ H = 7   # The H-dimension (“phase”).
 V = 8   # The V-dimension (“view”).
 M = 10  # The M_index, this is only valid for Mosaic files!</p>
 </div></blockquote>
-</li>
-</ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>an array of stings containing the specified subblock metadata</p>
@@ -582,15 +573,10 @@ M = 10  # The M_index, this is only valid for Mosaic files!</p>
 </div></blockquote>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><p>a tuple of (numpy.ndarray, a list of (Dimension, size)) the second element of the tuple is to make
-sure the numpy.ndarray is interpretable. An example of the list is</p>
-<blockquote>
-<div><blockquote>
-<div><p>[(‘S’, 1), (‘T’, 1), (‘C’, 2), (‘Z’, 25), (‘Y’, 1024), (‘X’, 1024)]</p>
-</div></blockquote>
-<p>so if you probed the numpy.ndarray with .shape you would get (1, 1, 2, 25, 1024, 1024).</p>
-</div></blockquote>
-</p>
+<dd class="field-even"><p>a tuple of (numpy.ndarray, a list of (Dimension, size)) the second element of the tuple is to make
+sure the numpy.ndarray is interpretable. An example of the list is
+[(‘S’, 1), (‘T’, 1), (‘C’, 2), (‘Z’, 25), (‘Y’, 1024), (‘X’, 1024)]
+so if you probed the numpy.ndarray with .shape you would get (1, 1, 2, 25, 1024, 1024).</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>(numpy.ndarray, [Dimension, Size])</p>
@@ -655,12 +641,10 @@ constraints are underspecified the function will fail.</p>
 <dl class="method">
 <dt id="aicspylibczi.CziFile.read_subblock_metadata">
 <code class="sig-name descname">read_subblock_metadata</code><span class="sig-paren">(</span><em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicspylibczi/CziFile.html#CziFile.read_subblock_metadata"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicspylibczi.CziFile.read_subblock_metadata" title="Permalink to this definition">¶</a></dt>
-<dd><p>Read the subblock specific metadata, ie time subblock was aquired / position at aquisition time etc.</p>
+<dd><p>Read the subblock specific metadata, ie time subblock was acquired / position at acquisition time etc.</p>
 <dl class="field-list">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul>
-<li><p><strong>m_index</strong> – If it’s a mosaic file and you wish to select specific M-index then use this otherwise ignore it.</p></li>
-<li><p><strong>kwargs</strong> – The keywords below allow you to specify the dimensions that you wish to match. If you
+<dd class="field-odd"><p><strong>kwargs</strong> – The keywords below allow you to specify the dimensions that you wish to match. If you
 under-specify the constraints you can easily end up with a massive image stack.</p>
 <blockquote>
 <div><p>Z = 1   # The Z-dimension.
@@ -673,8 +657,6 @@ H = 7   # The H-dimension (“phase”).
 V = 8   # The V-dimension (“view”).
 M = 10  # The M_index, this is only valid for Mosaic files!</p>
 </div></blockquote>
-</li>
-</ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>an array of stings containing the specified subblock metadata</p>

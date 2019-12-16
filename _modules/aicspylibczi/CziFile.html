@@ -168,23 +168,7 @@
            <div itemprop="articleBody">
             
   <h1>Source code for aicspylibczi.CziFile</h1><div class="highlight"><pre>
-<span></span><span class="c1"># This file is part of aicspylibczi.</span>
-<span class="c1"># Copyright (c) 2018 Center of Advanced European Studies and Research (caesar)</span>
-<span class="c1">#</span>
-<span class="c1"># aicspylibczi is free software: you can redistribute it and/or modify</span>
-<span class="c1"># it under the terms of the GNU General Public License as published by</span>
-<span class="c1"># the Free Software Foundation, either version 3 of the License, or</span>
-<span class="c1"># (at your option) any later version.</span>
-<span class="c1">#</span>
-<span class="c1"># aicspylibczi is distributed in the hope that it will be useful,</span>
-<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
-<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
-<span class="c1"># GNU General Public License for more details.</span>
-<span class="c1">#</span>
-<span class="c1"># You should have received a copy of the GNU General Public License</span>
-<span class="c1"># along with aicspylibczi.  If not, see &lt;https://www.gnu.org/licenses/&gt;.</span>
-
-<span class="c1"># Parent class for python wrapper to libczi file for accessing Zeiss czi image and metadata.</span>
+<span></span><span class="c1"># Parent class for python wrapper to libczi file for accessing Zeiss czi image and metadata.</span>
 
 <span class="kn">import</span> <span class="nn">io</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
@@ -393,12 +377,10 @@
 
 <div class="viewcode-block" id="CziFile.read_subblock_metadata"><a class="viewcode-back" href="../../aicspylibczi.html#aicspylibczi.CziFile.CziFile.read_subblock_metadata">[docs]</a>    <span class="k">def</span> <span class="nf">read_subblock_metadata</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Read the subblock specific metadata, ie time subblock was aquired / position at aquisition time etc.</span>
+<span class="sd">        Read the subblock specific metadata, ie time subblock was acquired / position at acquisition time etc.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        m_index</span>
-<span class="sd">            If it&#39;s a mosaic file and you wish to select specific M-index then use this otherwise ignore it.</span>
 <span class="sd">        kwargs</span>
 <span class="sd">            The keywords below allow you to specify the dimensions that you wish to match. If you</span>
 <span class="sd">            under-specify the constraints you can easily end up with a massive image stack.</span>
@@ -452,8 +434,8 @@
 <span class="sd">        (numpy.ndarray, [Dimension, Size])</span>
 <span class="sd">            a tuple of (numpy.ndarray, a list of (Dimension, size)) the second element of the tuple is to make</span>
 <span class="sd">            sure the numpy.ndarray is interpretable. An example of the list is</span>
-<span class="sd">                    [(&#39;S&#39;, 1), (&#39;T&#39;, 1), (&#39;C&#39;, 2), (&#39;Z&#39;, 25), (&#39;Y&#39;, 1024), (&#39;X&#39;, 1024)]</span>
-<span class="sd">                 so if you probed the numpy.ndarray with .shape you would get (1, 1, 2, 25, 1024, 1024).</span>
+<span class="sd">            [(&#39;S&#39;, 1), (&#39;T&#39;, 1), (&#39;C&#39;, 2), (&#39;Z&#39;, 25), (&#39;Y&#39;, 1024), (&#39;X&#39;, 1024)]</span>
+<span class="sd">            so if you probed the numpy.ndarray with .shape you would get (1, 1, 2, 25, 1024, 1024).</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">plane_constraints</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">czilib</span><span class="o">.</span><span class="n">DimCoord</span><span class="p">()</span>

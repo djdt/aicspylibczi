@@ -187,7 +187,7 @@
 <a class="reference external image-reference" href="https://github.com/AllenCellModeling/aicspylibczi/actions"><img alt="C++ Build &amp; Test" src="https://github.com/AllenCellModeling/aicspylibczi/workflows/C%2B%2B%20Master%20Build/badge.svg" /></a>
 <a class="reference external image-reference" href="https://github.com/AllenCellModeling/aicspylibczi/actions"><img alt="Python Build &amp; Test" src="https://github.com/AllenCellModeling/aicspylibczi/workflows/Python%20Master%20Build/badge.svg" /></a>
 <a class="reference external image-reference" href="https://codecov.io/gh/AllenCellModeling/aicspylibczi"><img alt="codecov" src="https://codecov.io/gh/AllenCellModeling/aicspylibczi/branch/feature/pybind11/graph/badge.svg" /></a>
-<a class="reference external image-reference" href="https://www.gnu.org/licenses/gpl-3.0"><img alt="License: GPL v3" src="https://img.shields.io/badge/License-GPLv3-blue.svg" /></a>
+<a class="reference external image-reference" href="https://github.com/AllenCellModeling/aicspylibczi/blob/master/LICENSE"><img alt="License: BSD3/GPLv3" src="https://img.shields.io/badge/License-BSD3/GPLv3-blue.svg" /></a>
 <p>Python module to expose <a class="reference external" href="https://github.com/zeiss-microscopy/libCZI">libCZI</a> functionality for reading (subset of) Zeiss CZI files and meta-data.</p>
 <div class="section" id="usage">
 <h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
@@ -216,10 +216,9 @@
 <span class="c1"># img.shape = (1, 1, 4, 1, 1300, 1900)   # numpy.ndarray</span>
 
 <span class="c1"># define helper functions</span>
-<span class="k">def</span> <span class="nf">norm_by</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">min</span><span class="p">,</span> <span class="nb">max</span><span class="p">):</span>
-    <span class="n">norms</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="p">[</span><span class="nb">min</span><span class="p">,</span> <span class="nb">max</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">norm_by</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">min_</span><span class="p">,</span> <span class="n">max_</span><span class="p">):</span>
+    <span class="n">norms</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="p">[</span><span class="n">min_</span><span class="p">,</span> <span class="n">max_</span><span class="p">])</span>
     <span class="n">i2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">((</span><span class="n">x</span> <span class="o">-</span> <span class="n">norms</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">/</span><span class="p">(</span><span class="n">norms</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">norms</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-    <span class="n">i2</span>
     <span class="k">return</span> <span class="n">i2</span>
 
 <span class="k">def</span> <span class="nf">recolor</span><span class="p">(</span><span class="n">im</span><span class="p">):</span> <span class="c1"># transform from rgb to cyan-magenta-yellow</span>
@@ -254,7 +253,7 @@
 <span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
 
 
-<span class="n">mosaic_file</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;20190618_CL001_HB01_Rescan_002.czi&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">expanduser</span><span class="p">()</span>
+<span class="n">mosaic_file</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;20190618_CL001_HB01_Rescan_002.czi&#39;</span><span class="p">)</span>
 <span class="n">czi</span> <span class="o">=</span> <span class="n">aicspylibczi</span><span class="o">.</span><span class="n">CziFile</span><span class="p">(</span><span class="n">mosaic_file</span><span class="p">)</span>
 
 <span class="c1"># Get the shape of the data</span>
@@ -319,11 +318,6 @@ ModuleNotFoundError: No module named ‘encodings’</p>
 </li>
 </ul>
 </div>
-<div class="section" id="license">
-<h2>License<a class="headerlink" href="#license" title="Permalink to this headline">¶</a></h2>
-<p>The GPLv3 license is a consequence of libCZI which imposes GPLv3. If you wish to use libCZI or this derivative in
-a commercial product you’ll need to talk to Zeiss.</p>
-</div>
 <div class="section" id="history">
 <h2>History<a class="headerlink" href="#history" title="Permalink to this headline">¶</a></h2>
 <p>aicspylibczi was originally a fork of <a class="reference external" href="https:://github.com/elhuhdron/pylibczi">pylibczi</a> that was developed by
@@ -333,6 +327,18 @@ and added the functionality to read individual subblocks and stacks of subblocks
 Metadata reading, including specific subblock metadata reading has also been added.</p>
 <p>We intend for this work to be merged back into the original project once we have the new work integrated with
 the original work.</p>
+</div>
+<div class="section" id="licenses-acknowledgements">
+<h2>Licenses &amp; Acknowledgements<a class="headerlink" href="#licenses-acknowledgements" title="Permalink to this headline">¶</a></h2>
+<p>The code directly in this repo implemented in C++ and Python is covered by BSD-3 license by the <a class="reference external" href="https://www.allencell.org/what-we-do.html">Allen Institute for
+Cell Science</a> at the <a class="reference external" href="https://alleninstitute.org/">Allen Institute</a>.</p>
+<p>This project however was created from a fork of pylibczi as explained above in the history section and Paul Watkins
+is a developer on our repo as well. Pylibczi, from
+the <a class="reference external" href="https://www.caesar.de/en/about-caesar/">Center of Advanced European Studies And Research</a>
+and the core dependency libCZI, are covered by the GPLv3 license.</p>
+<p>The <a class="reference external" href="https://www.gnu.org/licenses/gpl-3.0.en.html">GPLv3 license</a> is a consequence of libCZI which imposes GPLv3. If
+you wish to use libCZI or this derivative in a commercial product you may need to talk to
+Zeiss and CAESAR. <a class="reference external" href="https://choosealicense.com/licenses/gpl-3.0/">A discussion about GPLv3</a>.</p>
 </div>
 </div>
 <div class="section" id="indices-and-tables">
