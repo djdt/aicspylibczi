@@ -424,16 +424,13 @@
 <div class="viewcode-block" id="CziFile.read_image"><a class="viewcode-back" href="../../aicspylibczi.html#aicspylibczi.CziFile.CziFile.read_image">[docs]</a>    <span class="k">def</span> <span class="nf">read_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Read the subblocks in the CZI file and for any subblocks that match all the constraints in kwargs return</span>
-<span class="sd">        that data. This allows you to select channels/scenes/time-points/Z-slices etc. Note if the optional</span>
-<span class="sd">        split_bgr=True is passed for a BGR image then the dims of the object will returned by this function</span>
-<span class="sd">        and the implicit BGR channel will be expanded into 3 channels. This shape differ from the values of</span>
-<span class="sd">        dims(), size(), and dims_shape() as these are returning the native shape without changing from</span>
-<span class="sd">        BGR_3X to Gray_X.</span>
+<span class="sd">        that data. This allows you to select channels/scenes/time-points/Z-slices etc. Note if passed a BGR image</span>
+<span class="sd">        then the dims of the object will returned by this function and the implicit BGR channel will be expanded</span>
+<span class="sd">        into 3 channels. This shape differ from the values of dims(), size(), and dims_shape() as these are returning</span>
+<span class="sd">        the native shape without changing from BGR_3X to Gray_X.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        m_index : int (optional)</span>
-<span class="sd">            If it&#39;s a mosaic file and you wish to select specific M-indexs then use this otherwise ignore it.</span>
 <span class="sd">        **kwargs</span>
 <span class="sd">            The keywords below allow you to specify the dimensions that you wish to match. If you</span>
 <span class="sd">            under-specify the constraints you can easily end up with a massive image stack.</span>
@@ -446,8 +443,6 @@
 <span class="sd">                 H = 7   # The H-dimension (&quot;phase&quot;).</span>
 <span class="sd">                 V = 8   # The V-dimension (&quot;view&quot;).</span>
 <span class="sd">                 M = 10  # The M_index, this is only valid for Mosaic files!</span>
-
-<span class="sd">                 split_bgr = True | False</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
@@ -467,10 +462,7 @@
                     <span class="s2">&quot;M Dimension is specified but the file is not a mosaic file!&quot;</span>
                 <span class="p">)</span>
             <span class="n">m_index</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;M&#39;</span><span class="p">)</span>
-        <span class="n">split_bgr</span> <span class="o">=</span> <span class="kc">False</span>
-        <span class="k">if</span> <span class="s1">&#39;split_bgr&#39;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
-            <span class="n">split_bgr</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;split_bgr&#39;</span><span class="p">)</span>
-        <span class="n">image</span><span class="p">,</span> <span class="n">shape</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">reader</span><span class="o">.</span><span class="n">read_selected</span><span class="p">(</span><span class="n">plane_constraints</span><span class="p">,</span> <span class="n">m_index</span><span class="p">,</span> <span class="n">split_bgr</span><span class="p">)</span>
+        <span class="n">image</span><span class="p">,</span> <span class="n">shape</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">reader</span><span class="o">.</span><span class="n">read_selected</span><span class="p">(</span><span class="n">plane_constraints</span><span class="p">,</span> <span class="n">m_index</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">image</span><span class="p">,</span> <span class="n">shape</span></div>
 
 <div class="viewcode-block" id="CziFile.read_mosaic_size"><a class="viewcode-back" href="../../aicspylibczi.html#aicspylibczi.CziFile.CziFile.read_mosaic_size">[docs]</a>    <span class="k">def</span> <span class="nf">read_mosaic_size</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>

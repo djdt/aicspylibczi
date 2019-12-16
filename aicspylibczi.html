@@ -283,16 +283,13 @@ and 4 Z slices containing images of (h,w) = (325, 475) would return
 <dt id="aicspylibczi.CziFile.CziFile.read_image">
 <code class="sig-name descname">read_image</code><span class="sig-paren">(</span><em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicspylibczi/CziFile.html#CziFile.read_image"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicspylibczi.CziFile.CziFile.read_image" title="Permalink to this definition">¶</a></dt>
 <dd><p>Read the subblocks in the CZI file and for any subblocks that match all the constraints in kwargs return
-that data. This allows you to select channels/scenes/time-points/Z-slices etc. Note if the optional
-split_bgr=True is passed for a BGR image then the dims of the object will returned by this function
-and the implicit BGR channel will be expanded into 3 channels. This shape differ from the values of
-dims(), size(), and dims_shape() as these are returning the native shape without changing from
-BGR_3X to Gray_X.</p>
+that data. This allows you to select channels/scenes/time-points/Z-slices etc. Note if passed a BGR image
+then the dims of the object will returned by this function and the implicit BGR channel will be expanded
+into 3 channels. This shape differ from the values of dims(), size(), and dims_shape() as these are returning
+the native shape without changing from BGR_3X to Gray_X.</p>
 <dl class="field-list">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul>
-<li><p><strong>m_index</strong> (<em>int (optional)</em>) – If it’s a mosaic file and you wish to select specific M-indexs then use this otherwise ignore it.</p></li>
-<li><p><strong>**kwargs</strong> – The keywords below allow you to specify the dimensions that you wish to match. If you
+<dd class="field-odd"><p><strong>**kwargs</strong> – The keywords below allow you to specify the dimensions that you wish to match. If you
 under-specify the constraints you can easily end up with a massive image stack.</p>
 <blockquote>
 <div><p>Z = 1   # The Z-dimension.
@@ -304,10 +301,7 @@ I = 6   # The I-dimension (“illumination”).
 H = 7   # The H-dimension (“phase”).
 V = 8   # The V-dimension (“view”).
 M = 10  # The M_index, this is only valid for Mosaic files!</p>
-<p>split_bgr = True | False</p>
 </div></blockquote>
-</li>
-</ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p><p>a tuple of (numpy.ndarray, a list of (Dimension, size)) the second element of the tuple is to make
@@ -566,16 +560,13 @@ and 4 Z slices containing images of (h,w) = (325, 475) would return
 <dt id="aicspylibczi.CziFile.read_image">
 <code class="sig-name descname">read_image</code><span class="sig-paren">(</span><em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicspylibczi/CziFile.html#CziFile.read_image"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicspylibczi.CziFile.read_image" title="Permalink to this definition">¶</a></dt>
 <dd><p>Read the subblocks in the CZI file and for any subblocks that match all the constraints in kwargs return
-that data. This allows you to select channels/scenes/time-points/Z-slices etc. Note if the optional
-split_bgr=True is passed for a BGR image then the dims of the object will returned by this function
-and the implicit BGR channel will be expanded into 3 channels. This shape differ from the values of
-dims(), size(), and dims_shape() as these are returning the native shape without changing from
-BGR_3X to Gray_X.</p>
+that data. This allows you to select channels/scenes/time-points/Z-slices etc. Note if passed a BGR image
+then the dims of the object will returned by this function and the implicit BGR channel will be expanded
+into 3 channels. This shape differ from the values of dims(), size(), and dims_shape() as these are returning
+the native shape without changing from BGR_3X to Gray_X.</p>
 <dl class="field-list">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul>
-<li><p><strong>m_index</strong> (<em>int (optional)</em>) – If it’s a mosaic file and you wish to select specific M-indexs then use this otherwise ignore it.</p></li>
-<li><p><strong>**kwargs</strong> – The keywords below allow you to specify the dimensions that you wish to match. If you
+<dd class="field-odd"><p><strong>**kwargs</strong> – The keywords below allow you to specify the dimensions that you wish to match. If you
 under-specify the constraints you can easily end up with a massive image stack.</p>
 <blockquote>
 <div><p>Z = 1   # The Z-dimension.
@@ -587,10 +578,7 @@ I = 6   # The I-dimension (“illumination”).
 H = 7   # The H-dimension (“phase”).
 V = 8   # The V-dimension (“view”).
 M = 10  # The M_index, this is only valid for Mosaic files!</p>
-<p>split_bgr = True | False</p>
 </div></blockquote>
-</li>
-</ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p><p>a tuple of (numpy.ndarray, a list of (Dimension, size)) the second element of the tuple is to make
