@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Welcome to aicspylibczi’s documentation! &mdash; aicspylibczi 2.4.0 documentation</title>
+  <title>Welcome to aicspylibczi’s documentation! &mdash; aicspylibczi 2.4.1 documentation</title>
   
 
   
@@ -59,7 +59,7 @@
             
             
               <div class="version">
-                2.4.0
+                2.4.1
               </div>
             
           
@@ -203,11 +203,11 @@
 <span class="n">czi</span> <span class="o">=</span> <span class="n">CziFile</span><span class="p">(</span><span class="n">pth</span><span class="p">)</span>
 
 <span class="c1"># Get the shape of the data, the coordinate pairs are (start index, size)</span>
-<span class="n">dimensions</span> <span class="o">=</span> <span class="n">czi</span><span class="o">.</span><span class="n">dims_shape</span><span class="p">()</span>  <span class="c1"># {&#39;Z&#39;: (0, 70), &#39;C&#39;: (0, 2), &#39;T&#39;: (0, 146), &#39;S&#39;: (0, 12), &#39;B&#39;: (0, 1)}</span>
+<span class="n">dimensions</span> <span class="o">=</span> <span class="n">czi</span><span class="o">.</span><span class="n">dims_shape</span><span class="p">()</span>  <span class="c1">#  [{&#39;X&#39;: (0, 1900), &#39;Y&#39;: (0, 1300), &#39;Z&#39;: (0, 60), &#39;C&#39;: (0, 4), &#39;S&#39;: (0, 40), &#39;B&#39;: (0, 1)}]</span>
 
-<span class="n">czi</span><span class="o">.</span><span class="n">dims</span>  <span class="c1">#  BSTCZYX</span>
+<span class="n">czi</span><span class="o">.</span><span class="n">dims</span>  <span class="c1">#  BSCZYX</span>
 
-<span class="n">czi</span><span class="o">.</span><span class="n">size</span>  <span class="c1">#  (1, 12, 146, 2, 70, 1300, 1900)</span>
+<span class="n">czi</span><span class="o">.</span><span class="n">size</span>  <span class="c1">#  (1, 40, 4, 60, 1300, 1900)</span>
 
 <span class="c1"># Load the image slice I want from the file</span>
 <span class="n">img</span><span class="p">,</span> <span class="n">shp</span> <span class="o">=</span> <span class="n">czi</span><span class="o">.</span><span class="n">read_image</span><span class="p">(</span><span class="n">S</span><span class="o">=</span><span class="mi">13</span><span class="p">,</span> <span class="n">Z</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
@@ -253,7 +253,7 @@
 <span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
 
 
-<span class="n">mosaic_file</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;20190618_CL001_HB01_Rescan_002.czi&#39;</span><span class="p">)</span>
+<span class="n">mosaic_file</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;mosaic_test.czi&#39;</span><span class="p">)</span>
 <span class="n">czi</span> <span class="o">=</span> <span class="n">aicspylibczi</span><span class="o">.</span><span class="n">CziFile</span><span class="p">(</span><span class="n">mosaic_file</span><span class="p">)</span>
 
 <span class="c1"># Get the shape of the data</span>
@@ -261,7 +261,7 @@
 
 <span class="n">czi</span><span class="o">.</span><span class="n">size</span>  <span class="c1"># (1, 1, 1, 1, 2, 624, 924)</span>
 
-<span class="n">czi</span><span class="o">.</span><span class="n">dims_shape</span><span class="p">()</span>  <span class="c1"># {&#39;C&#39;: (0, 0), &#39;M&#39;: (0, 1), &#39;S&#39;: (0, 0), &#39;T&#39;: (0, 0), &#39;X&#39;: (0, 923), &#39;Y&#39;: (0, 623), &#39;Z&#39;: (0, 0)}</span>
+<span class="n">czi</span><span class="o">.</span><span class="n">dims_shape</span><span class="p">()</span>  <span class="c1"># [{&#39;X&#39;: (0, 924), &#39;Y&#39;: (0, 624), &#39;Z&#39;: (0, 1), &#39;C&#39;: (0, 1), &#39;T&#39;: (0, 1), &#39;M&#39;: (0, 2), &#39;S&#39;: (0, 1)}]</span>
 
 <span class="n">czi</span><span class="o">.</span><span class="n">is_mosaic</span><span class="p">()</span>  <span class="c1"># True</span>
  <span class="c1"># Mosaic files ignore the S dimension and use an internal mIndex to reconstruct, the scale factor allows one to generate a manageable image</span>
@@ -316,6 +316,13 @@ pip install .[all] # for everything including jupyter notebook to work with the 
 ModuleNotFoundError: No module named ‘encodings’</p>
 </div></blockquote>
 </li>
+</ul>
+</div>
+<div class="section" id="known-issues">
+<h2>Known Issues<a class="headerlink" href="#known-issues" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>with read_mosaic if the scale_factor is not 1.0 Zeiss’s libCZI will, on some files, fail to render certain subblocks
+within the composite mosaic image. It is not currently known if this is an issue with the file or with libCZI.</p></li>
 </ul>
 </div>
 <div class="section" id="history">
