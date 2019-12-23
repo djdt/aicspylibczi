@@ -229,6 +229,19 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">meta_root</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">shape_is_consistent</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Query if the file shape is consistent across scenes.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        bool</span>
+<span class="sd">            true if consistent, false the scenes have different dimension shapes</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">reader</span><span class="o">.</span><span class="n">has_consistent_shape</span><span class="p">()</span>
+
+    <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">dims</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get the dimensions present the binary data (not the metadata)</span>
@@ -248,10 +261,20 @@
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        dict</span>
-<span class="sd">            A dictionary containing Dimension / depth, a file with 3 scenes, 7 time-points</span>
+<span class="sd">        list[dict]</span>
+<span class="sd">            A list of dictionaries containing Dimension / depth. If the shape is consistent across Scenes then</span>
+<span class="sd">            the list will have only one Dictionary. If the shape is inconsistent the the list will have a dictionary</span>
+<span class="sd">             for each Scene. A consistently shaped file with 3 scenes, 7 time-points</span>
 <span class="sd">            and 4 Z slices containing images of (h,w) = (325, 475) would return</span>
-<span class="sd">            {&#39;S&#39;: 3, &#39;T&#39;: 7, &#39;X&#39;: 475, &#39;Y&#39;: 325, &#39;Z&#39;: 4}</span>
+<span class="sd">            [</span>
+<span class="sd">             {&#39;S&#39;: (0, 3), &#39;T&#39;: (0,7), &#39;X&#39;: (0, 475), &#39;Y&#39;: (0, 325), &#39;Z&#39;: (0, 4)}</span>
+<span class="sd">            ].</span>
+<span class="sd">            The result for a similarly shaped file but with different number of time-points per scene would yield</span>
+<span class="sd">            [</span>
+<span class="sd">             {&#39;S&#39;: (0, 1), &#39;T&#39;: (0,8), &#39;X&#39;: (0, 475), &#39;Y&#39;: (0, 325), &#39;Z&#39;: (0, 4)},</span>
+<span class="sd">             {&#39;S&#39;: (1, 2), &#39;T&#39;: (0,6), &#39;X&#39;: (0, 475), &#39;Y&#39;: (0, 325), &#39;Z&#39;: (0, 4)},</span>
+<span class="sd">             {&#39;S&#39;: (2, 3), &#39;T&#39;: (0,7), &#39;X&#39;: (0, 475), &#39;Y&#39;: (0, 325), &#39;Z&#39;: (0, 4)}</span>
+<span class="sd">            ]</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">reader</span><span class="o">.</span><span class="n">read_dims</span><span class="p">()</span></div>
@@ -305,7 +328,8 @@
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        tuple</span>
-<span class="sd">            a tuple of dimension sizes</span>
+<span class="sd">            a tuple of dimension sizes. If the data has inconsistent shape the list will only contain -1 values and</span>
+<span class="sd">            the user needs to use dims_shape() to get the indexes.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">reader</span><span class="o">.</span><span class="n">read_dims_sizes</span><span class="p">())</span>

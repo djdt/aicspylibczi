@@ -241,12 +241,29 @@ Y and X are included for completeness but can not be used as constraints.</p>
 <dd><p>Get the dimensions for the opened file from the binary data (not the metadata)</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>A dictionary containing Dimension / depth, a file with 3 scenes, 7 time-points
-and 4 Z slices containing images of (h,w) = (325, 475) would return
-{‘S’: 3, ‘T’: 7, ‘X’: 475, ‘Y’: 325, ‘Z’: 4}</p>
+<dd class="field-odd"><p><p>A list of dictionaries containing Dimension / depth. If the shape is consistent across Scenes then
+the list will have only one Dictionary. If the shape is inconsistent the the list will have a dictionary</p>
+<blockquote>
+<div><p>for each Scene. A consistently shaped file with 3 scenes, 7 time-points</p>
+</div></blockquote>
+<p>and 4 Z slices containing images of (h,w) = (325, 475) would return
+[</p>
+<blockquote>
+<div><p>{‘S’: (0, 3), ‘T’: (0,7), ‘X’: (0, 475), ‘Y’: (0, 325), ‘Z’: (0, 4)}</p>
+</div></blockquote>
+<p>].
+The result for a similarly shaped file but with different number of time-points per scene would yield
+[</p>
+<blockquote>
+<div><p>{‘S’: (0, 1), ‘T’: (0,8), ‘X’: (0, 475), ‘Y’: (0, 325), ‘Z’: (0, 4)},
+{‘S’: (1, 2), ‘T’: (0,6), ‘X’: (0, 475), ‘Y’: (0, 325), ‘Z’: (0, 4)},
+{‘S’: (2, 3), ‘T’: (0,7), ‘X’: (0, 475), ‘Y’: (0, 325), ‘Z’: (0, 4)}</p>
+</div></blockquote>
+<p>]</p>
+</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p>dict</p>
+<dd class="field-even"><p>list[dict]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -438,13 +455,28 @@ This module will warn you on instantiation if the scenes have inconsistent width
 </dd></dl>
 
 <dl class="method">
+<dt id="aicspylibczi.CziFile.CziFile.shape_is_consistent">
+<em class="property">property </em><code class="sig-name descname">shape_is_consistent</code><a class="headerlink" href="#aicspylibczi.CziFile.CziFile.shape_is_consistent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Query if the file shape is consistent across scenes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>true if consistent, false the scenes have different dimension shapes</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
 <dt id="aicspylibczi.CziFile.CziFile.size">
 <em class="property">property </em><code class="sig-name descname">size</code><a class="headerlink" href="#aicspylibczi.CziFile.CziFile.size" title="Permalink to this definition">¶</a></dt>
 <dd><p>This returns the Size of each dimension in the dims string. So if S had valid indexes of [0, 1, 2, 3, 4]
 the returned tuple would have a value of 5 in the same position as the S occurs in the dims string.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>a tuple of dimension sizes</p>
+<dd class="field-odd"><p>a tuple of dimension sizes. If the data has inconsistent shape the list will only contain -1 values and
+the user needs to use dims_shape() to get the indexes.</p>
 </dd>
 <dt class="field-even">Return type</dt>
 <dd class="field-even"><p>tuple</p>
@@ -512,12 +544,29 @@ Y and X are included for completeness but can not be used as constraints.</p>
 <dd><p>Get the dimensions for the opened file from the binary data (not the metadata)</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>A dictionary containing Dimension / depth, a file with 3 scenes, 7 time-points
-and 4 Z slices containing images of (h,w) = (325, 475) would return
-{‘S’: 3, ‘T’: 7, ‘X’: 475, ‘Y’: 325, ‘Z’: 4}</p>
+<dd class="field-odd"><p><p>A list of dictionaries containing Dimension / depth. If the shape is consistent across Scenes then
+the list will have only one Dictionary. If the shape is inconsistent the the list will have a dictionary</p>
+<blockquote>
+<div><p>for each Scene. A consistently shaped file with 3 scenes, 7 time-points</p>
+</div></blockquote>
+<p>and 4 Z slices containing images of (h,w) = (325, 475) would return
+[</p>
+<blockquote>
+<div><p>{‘S’: (0, 3), ‘T’: (0,7), ‘X’: (0, 475), ‘Y’: (0, 325), ‘Z’: (0, 4)}</p>
+</div></blockquote>
+<p>].
+The result for a similarly shaped file but with different number of time-points per scene would yield
+[</p>
+<blockquote>
+<div><p>{‘S’: (0, 1), ‘T’: (0,8), ‘X’: (0, 475), ‘Y’: (0, 325), ‘Z’: (0, 4)},
+{‘S’: (1, 2), ‘T’: (0,6), ‘X’: (0, 475), ‘Y’: (0, 325), ‘Z’: (0, 4)},
+{‘S’: (2, 3), ‘T’: (0,7), ‘X’: (0, 475), ‘Y’: (0, 325), ‘Z’: (0, 4)}</p>
+</div></blockquote>
+<p>]</p>
+</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p>dict</p>
+<dd class="field-even"><p>list[dict]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -709,13 +758,28 @@ This module will warn you on instantiation if the scenes have inconsistent width
 </dd></dl>
 
 <dl class="method">
+<dt id="aicspylibczi.CziFile.shape_is_consistent">
+<em class="property">property </em><code class="sig-name descname">shape_is_consistent</code><a class="headerlink" href="#aicspylibczi.CziFile.shape_is_consistent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Query if the file shape is consistent across scenes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>true if consistent, false the scenes have different dimension shapes</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
 <dt id="aicspylibczi.CziFile.size">
 <em class="property">property </em><code class="sig-name descname">size</code><a class="headerlink" href="#aicspylibczi.CziFile.size" title="Permalink to this definition">¶</a></dt>
 <dd><p>This returns the Size of each dimension in the dims string. So if S had valid indexes of [0, 1, 2, 3, 4]
 the returned tuple would have a value of 5 in the same position as the S occurs in the dims string.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>a tuple of dimension sizes</p>
+<dd class="field-odd"><p>a tuple of dimension sizes. If the data has inconsistent shape the list will only contain -1 values and
+the user needs to use dims_shape() to get the indexes.</p>
 </dd>
 <dt class="field-even">Return type</dt>
 <dd class="field-even"><p>tuple</p>
