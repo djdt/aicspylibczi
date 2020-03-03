@@ -279,6 +279,17 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">reader</span><span class="o">.</span><span class="n">read_dims</span><span class="p">()</span></div>
 
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">pixel_type</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The pixelType of the images. If the pixelType is different in the different subblocks it returns Invalid.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        A string containing the name of the type of each pixel. If inconsistent it returns invalid.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">reader</span><span class="o">.</span><span class="n">pixel_type</span><span class="p">()</span>
+
 <div class="viewcode-block" id="CziFile.scene_bounding_box"><a class="viewcode-back" href="../../aicspylibczi.html#aicspylibczi.CziFile.CziFile.scene_bounding_box">[docs]</a>    <span class="k">def</span> <span class="nf">scene_bounding_box</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get the bounding box of the raw collected data (pyramid 0) from the czifile. if not specified it defaults to</span>
@@ -461,6 +472,11 @@
 <span class="sd">            [(&#39;S&#39;, 1), (&#39;T&#39;, 1), (&#39;C&#39;, 2), (&#39;Z&#39;, 25), (&#39;Y&#39;, 1024), (&#39;X&#39;, 1024)]</span>
 <span class="sd">            so if you probed the numpy.ndarray with .shape you would get (1, 1, 2, 25, 1024, 1024).</span>
 
+<span class="sd">        Notes</span>
+<span class="sd">        -----</span>
+<span class="sd">        The M Dimension is a representation of the m_index used inside libCZI. Unfortunately this can be sparsely</span>
+<span class="sd">        packed for a given selection which causes problems when indexing memory. Consequently the M Dimension may</span>
+<span class="sd">        not match the m_index that is being used in libCZI or displayed in Zeiss&#39; Zen software.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">plane_constraints</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">czilib</span><span class="o">.</span><span class="n">DimCoord</span><span class="p">()</span>
         <span class="p">[</span><span class="n">plane_constraints</span><span class="o">.</span><span class="n">set_dim</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">CziFile</span><span class="o">.</span><span class="n">ZISRAW_DIMS</span><span class="p">]</span>

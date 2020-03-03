@@ -297,6 +297,20 @@ The result for a similarly shaped file but with different number of time-points 
 </dd></dl>
 
 <dl class="method">
+<dt id="aicspylibczi.CziFile.CziFile.pixel_type">
+<em class="property">property </em><code class="sig-name descname">pixel_type</code><a class="headerlink" href="#aicspylibczi.CziFile.CziFile.pixel_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>The pixelType of the images. If the pixelType is different in the different subblocks it returns Invalid.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p></p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>A string containing the name of the type of each pixel. If inconsistent it returns invalid.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
 <dt id="aicspylibczi.CziFile.CziFile.read_image">
 <code class="sig-name descname">read_image</code><span class="sig-paren">(</span><em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicspylibczi/CziFile.html#CziFile.read_image"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicspylibczi.CziFile.CziFile.read_image" title="Permalink to this definition">¶</a></dt>
 <dd><p>Read the subblocks in the CZI file and for any subblocks that match all the constraints in kwargs return
@@ -330,6 +344,10 @@ so if you probed the numpy.ndarray with .shape you would get (1, 1, 2, 25, 1024,
 <dd class="field-odd"><p>(numpy.ndarray, [Dimension, Size])</p>
 </dd>
 </dl>
+<p class="rubric">Notes</p>
+<p>The M Dimension is a representation of the m_index used inside libCZI. Unfortunately this can be sparsely
+packed for a given selection which causes problems when indexing memory. Consequently the M Dimension may
+not match the m_index that is being used in libCZI or displayed in Zeiss’ Zen software.</p>
 </dd></dl>
 
 <dl class="method">
@@ -600,6 +618,20 @@ The result for a similarly shaped file but with different number of time-points 
 </dd></dl>
 
 <dl class="method">
+<dt id="aicspylibczi.CziFile.pixel_type">
+<em class="property">property </em><code class="sig-name descname">pixel_type</code><a class="headerlink" href="#aicspylibczi.CziFile.pixel_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>The pixelType of the images. If the pixelType is different in the different subblocks it returns Invalid.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p></p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>A string containing the name of the type of each pixel. If inconsistent it returns invalid.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
 <dt id="aicspylibczi.CziFile.read_image">
 <code class="sig-name descname">read_image</code><span class="sig-paren">(</span><em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicspylibczi/CziFile.html#CziFile.read_image"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicspylibczi.CziFile.read_image" title="Permalink to this definition">¶</a></dt>
 <dd><p>Read the subblocks in the CZI file and for any subblocks that match all the constraints in kwargs return
@@ -633,6 +665,10 @@ so if you probed the numpy.ndarray with .shape you would get (1, 1, 2, 25, 1024,
 <dd class="field-odd"><p>(numpy.ndarray, [Dimension, Size])</p>
 </dd>
 </dl>
+<p class="rubric">Notes</p>
+<p>The M Dimension is a representation of the m_index used inside libCZI. Unfortunately this can be sparsely
+packed for a given selection which causes problems when indexing memory. Consequently the M Dimension may
+not match the m_index that is being used in libCZI or displayed in Zeiss’ Zen software.</p>
 </dd></dl>
 
 <dl class="method">
