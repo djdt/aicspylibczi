@@ -386,7 +386,7 @@
         <span class="c1"># Raise</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;Reader only accepts types: [str, pathlib.Path, bytes, io.BytesIO], received: {type(file)}&quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;Reader only accepts types: [str, pathlib.Path, bytes, io.BytesIO], received: </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">file</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
             <span class="p">)</span></div>
 
     <span class="nd">@property</span>
@@ -440,6 +440,39 @@
         <span class="n">m_index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_m_index_from_kwargs</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">reader</span><span class="o">.</span><span class="n">read_meta_from_subblock</span><span class="p">(</span><span class="n">plane_constraints</span><span class="p">,</span> <span class="n">m_index</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CziFile.read_subblock_rect"><a class="viewcode-back" href="../../aicspylibczi.html#aicspylibczi.CziFile.CziFile.read_subblock_rect">[docs]</a>    <span class="k">def</span> <span class="nf">read_subblock_rect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Read the subblock specific coordinates. For non-mosaic files S only needs to be set, for mosaic files the</span>
+<span class="sd">        S and M Dimensions need to be specified. In both cases, if underspecified only the first match is returned.</span>
+<span class="sd">        If overspecified a PylibCZI_CDimCoordinatesOverspecifiedException is raised.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        kwargs</span>
+<span class="sd">            The keywords below allow you to specify the dimensions that you wish to match. If you</span>
+<span class="sd">            under-specify the constraints you can easily end up with a massive image stack.</span>
+<span class="sd">                       Z = 1   # The Z-dimension.</span>
+<span class="sd">                       C = 2   # The C-dimension (&quot;channel&quot;).</span>
+<span class="sd">                       T = 3   # The T-dimension (&quot;time&quot;).</span>
+<span class="sd">                       R = 4   # The R-dimension (&quot;rotation&quot;).</span>
+<span class="sd">                       S = 5   # The S-dimension (&quot;scene&quot;).</span>
+<span class="sd">                       I = 6   # The I-dimension (&quot;illumination&quot;).</span>
+<span class="sd">                       H = 7   # The H-dimension (&quot;phase&quot;).</span>
+<span class="sd">                       V = 8   # The V-dimension (&quot;view&quot;).</span>
+<span class="sd">                       M = 10  # The M_index, this is only valid for Mosaic files and must be provided here!</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        (int, int, int, int)</span>
+<span class="sd">            (x, y, w, h) the bounding box of the tile</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">plane_constraints</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">czilib</span><span class="o">.</span><span class="n">DimCoord</span><span class="p">()</span>
+        <span class="p">[</span><span class="n">plane_constraints</span><span class="o">.</span><span class="n">set_dim</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">CziFile</span><span class="o">.</span><span class="n">ZISRAW_DIMS</span><span class="p">]</span>
+        <span class="n">m_index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_m_index_from_kwargs</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">rect</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">reader</span><span class="o">.</span><span class="n">read_rect_from_subblock</span><span class="p">(</span><span class="n">plane_constraints</span><span class="p">,</span> <span class="n">m_index</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">rect</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">rect</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">rect</span><span class="o">.</span><span class="n">w</span><span class="p">,</span> <span class="n">rect</span><span class="o">.</span><span class="n">h</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="CziFile.read_image"><a class="viewcode-back" href="../../aicspylibczi.html#aicspylibczi.CziFile.CziFile.read_image">[docs]</a>    <span class="k">def</span> <span class="nf">read_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>

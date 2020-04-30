@@ -436,6 +436,37 @@ M = 10  # The M_index, this is only valid for Mosaic files!</p>
 </dd></dl>
 
 <dl class="method">
+<dt id="aicspylibczi.CziFile.CziFile.read_subblock_rect">
+<code class="sig-name descname">read_subblock_rect</code><span class="sig-paren">(</span><em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicspylibczi/CziFile.html#CziFile.read_subblock_rect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicspylibczi.CziFile.CziFile.read_subblock_rect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read the subblock specific coordinates. For non-mosaic files S only needs to be set, for mosaic files the
+S and M Dimensions need to be specified. In both cases, if underspecified only the first match is returned.
+If overspecified a PylibCZI_CDimCoordinatesOverspecifiedException is raised.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>kwargs</strong> – The keywords below allow you to specify the dimensions that you wish to match. If you
+under-specify the constraints you can easily end up with a massive image stack.</p>
+<blockquote>
+<div><p>Z = 1   # The Z-dimension.
+C = 2   # The C-dimension (“channel”).
+T = 3   # The T-dimension (“time”).
+R = 4   # The R-dimension (“rotation”).
+S = 5   # The S-dimension (“scene”).
+I = 6   # The I-dimension (“illumination”).
+H = 7   # The H-dimension (“phase”).
+V = 8   # The V-dimension (“view”).
+M = 10  # The M_index, this is only valid for Mosaic files and must be provided here!</p>
+</div></blockquote>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>(x, y, w, h) the bounding box of the tile</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>(int, int, int, int)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
 <dt id="aicspylibczi.CziFile.CziFile.scene_bounding_box">
 <code class="sig-name descname">scene_bounding_box</code><span class="sig-paren">(</span><em class="sig-param">index: int = -1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicspylibczi/CziFile.html#CziFile.scene_bounding_box"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicspylibczi.CziFile.CziFile.scene_bounding_box" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the bounding box of the raw collected data (pyramid 0) from the czifile. if not specified it defaults to
@@ -752,6 +783,37 @@ M = 10  # The M_index, this is only valid for Mosaic files!</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>[str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="aicspylibczi.CziFile.read_subblock_rect">
+<code class="sig-name descname">read_subblock_rect</code><span class="sig-paren">(</span><em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicspylibczi/CziFile.html#CziFile.read_subblock_rect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicspylibczi.CziFile.read_subblock_rect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read the subblock specific coordinates. For non-mosaic files S only needs to be set, for mosaic files the
+S and M Dimensions need to be specified. In both cases, if underspecified only the first match is returned.
+If overspecified a PylibCZI_CDimCoordinatesOverspecifiedException is raised.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>kwargs</strong> – The keywords below allow you to specify the dimensions that you wish to match. If you
+under-specify the constraints you can easily end up with a massive image stack.</p>
+<blockquote>
+<div><p>Z = 1   # The Z-dimension.
+C = 2   # The C-dimension (“channel”).
+T = 3   # The T-dimension (“time”).
+R = 4   # The R-dimension (“rotation”).
+S = 5   # The S-dimension (“scene”).
+I = 6   # The I-dimension (“illumination”).
+H = 7   # The H-dimension (“phase”).
+V = 8   # The V-dimension (“view”).
+M = 10  # The M_index, this is only valid for Mosaic files and must be provided here!</p>
+</div></blockquote>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>(x, y, w, h) the bounding box of the tile</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>(int, int, int, int)</p>
 </dd>
 </dl>
 </dd></dl>
