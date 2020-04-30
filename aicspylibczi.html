@@ -285,13 +285,13 @@ The result for a similarly shaped file but with different number of time-points 
 <dl class="method">
 <dt id="aicspylibczi.CziFile.CziFile.meta">
 <em class="property">property </em><code class="sig-name descname">meta</code><a class="headerlink" href="#aicspylibczi.CziFile.CziFile.meta" title="Permalink to this definition">¶</a></dt>
-<dd><p>Extract all metadata from czifile.</p>
+<dd><p>Extract the metadata block from the czi file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>metadata as an xml etree</p>
+<dd class="field-odd"><p>An lxml.etree of the metadata as a string</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p>lxml.etree</p>
+<dd class="field-even"><p>str</p>
 </dd>
 </dl>
 </dd></dl>
@@ -408,11 +408,14 @@ constraints are underspecified the function will fail.</p>
 
 <dl class="method">
 <dt id="aicspylibczi.CziFile.CziFile.read_subblock_metadata">
-<code class="sig-name descname">read_subblock_metadata</code><span class="sig-paren">(</span><em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicspylibczi/CziFile.html#CziFile.read_subblock_metadata"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicspylibczi.CziFile.CziFile.read_subblock_metadata" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">read_subblock_metadata</code><span class="sig-paren">(</span><em class="sig-param">unified_xml: bool = False</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicspylibczi/CziFile.html#CziFile.read_subblock_metadata"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicspylibczi.CziFile.CziFile.read_subblock_metadata" title="Permalink to this definition">¶</a></dt>
 <dd><p>Read the subblock specific metadata, ie time subblock was acquired / position at acquisition time etc.</p>
 <dl class="field-list">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>kwargs</strong> – The keywords below allow you to specify the dimensions that you wish to match. If you
+<dd class="field-odd"><ul>
+<li><p><strong>unified_xml</strong> (<em>bool</em>) – If True return a single unified xml tree containing the requested subblock.
+If False return a list of tuples (dims, xml)</p></li>
+<li><p><strong>kwargs</strong> – The keywords below allow you to specify the dimensions that you wish to match. If you
 under-specify the constraints you can easily end up with a massive image stack.</p>
 <blockquote>
 <div><p>Z = 1   # The Z-dimension.
@@ -425,12 +428,15 @@ H = 7   # The H-dimension (“phase”).
 V = 8   # The V-dimension (“view”).
 M = 10  # The M_index, this is only valid for Mosaic files!</p>
 </div></blockquote>
+</li>
+</ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>an array of stings containing the specified subblock metadata</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>[str]</p>
+<dd class="field-even"><p><ul class="simple">
+<li><p><em>[(dict, str)] if unified_xml is False</em> – an array of tuples containing a dimension dictionary and the corresponding subblock metadata</p></li>
+<li><p><em>lxml.etree.Element if unified_xml is True</em> – an lxml document containing the requested subblock metadata.</p></li>
+</ul>
+</p>
 </dd>
 </dl>
 </dd></dl>
@@ -637,13 +643,13 @@ The result for a similarly shaped file but with different number of time-points 
 <dl class="method">
 <dt id="aicspylibczi.CziFile.meta">
 <em class="property">property </em><code class="sig-name descname">meta</code><a class="headerlink" href="#aicspylibczi.CziFile.meta" title="Permalink to this definition">¶</a></dt>
-<dd><p>Extract all metadata from czifile.</p>
+<dd><p>Extract the metadata block from the czi file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>metadata as an xml etree</p>
+<dd class="field-odd"><p>An lxml.etree of the metadata as a string</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p>lxml.etree</p>
+<dd class="field-even"><p>str</p>
 </dd>
 </dl>
 </dd></dl>
@@ -760,11 +766,14 @@ constraints are underspecified the function will fail.</p>
 
 <dl class="method">
 <dt id="aicspylibczi.CziFile.read_subblock_metadata">
-<code class="sig-name descname">read_subblock_metadata</code><span class="sig-paren">(</span><em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicspylibczi/CziFile.html#CziFile.read_subblock_metadata"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicspylibczi.CziFile.read_subblock_metadata" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">read_subblock_metadata</code><span class="sig-paren">(</span><em class="sig-param">unified_xml: bool = False</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicspylibczi/CziFile.html#CziFile.read_subblock_metadata"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicspylibczi.CziFile.read_subblock_metadata" title="Permalink to this definition">¶</a></dt>
 <dd><p>Read the subblock specific metadata, ie time subblock was acquired / position at acquisition time etc.</p>
 <dl class="field-list">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>kwargs</strong> – The keywords below allow you to specify the dimensions that you wish to match. If you
+<dd class="field-odd"><ul>
+<li><p><strong>unified_xml</strong> (<em>bool</em>) – If True return a single unified xml tree containing the requested subblock.
+If False return a list of tuples (dims, xml)</p></li>
+<li><p><strong>kwargs</strong> – The keywords below allow you to specify the dimensions that you wish to match. If you
 under-specify the constraints you can easily end up with a massive image stack.</p>
 <blockquote>
 <div><p>Z = 1   # The Z-dimension.
@@ -777,12 +786,15 @@ H = 7   # The H-dimension (“phase”).
 V = 8   # The V-dimension (“view”).
 M = 10  # The M_index, this is only valid for Mosaic files!</p>
 </div></blockquote>
+</li>
+</ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>an array of stings containing the specified subblock metadata</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>[str]</p>
+<dd class="field-even"><p><ul class="simple">
+<li><p><em>[(dict, str)] if unified_xml is False</em> – an array of tuples containing a dimension dictionary and the corresponding subblock metadata</p></li>
+<li><p><em>lxml.etree.Element if unified_xml is True</em> – an lxml document containing the requested subblock metadata.</p></li>
+</ul>
+</p>
 </dd>
 </dl>
 </dd></dl>
