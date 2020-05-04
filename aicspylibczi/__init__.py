@@ -1,3 +1,13 @@
 __all__ = ["CziFile"]
 from .CziFile import CziFile
 from ._version import __version__  # noqa F401
+from _aicspylibczi import PylibCZI_BytesIO2FilePtrException
+from _aicspylibczi import PylibCZI_CDimCoordinatesOverspecifiedException
+from _aicspylibczi import PylibCZI_CDimCoordinatesUnderspecifiedException
+from _aicspylibczi import PylibCZI_CDimSpecSelectedNoImagesException
+from _aicspylibczi import PylibCZI_ImageAccessUnderspecifiedException
+from _aicspylibczi import PylibCZI_ImageCopyAllocFailed
+from _aicspylibczi import PylibCZI_ImageIteratorException
+from _aicspylibczi import PylibCZI_ImageSplitChannelException
+from _aicspylibczi import PylibCZI_PixelTypeException
+from _aicspylibczi import PylibCZI_RegionSelectionException
