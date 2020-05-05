@@ -1,9 +1,9 @@
 name: Python package ManyLinux2010
 
-on:
-  push:
-    branches:
-      - 'release/aicspylibczi'
+on: push
+#  push:
+#    branches:
+#      - 'release/aicspylibczi'
 
 jobs:
   wheel-setup:
