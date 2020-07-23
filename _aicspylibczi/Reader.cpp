@@ -283,6 +283,8 @@ namespace pylibczi {
       return std::make_pair(imageFactory.transferMemoryContainer(), charShape);
   }
 
+
+
   SubblockMetaVec
   Reader::readSubblockMeta(libCZI::CDimCoordinate& plane_coord_, int index_m_)
   {
