@@ -23,8 +23,6 @@ namespace pylibczi {
 
       ImagesContainerBase::ImagesContainerBasePtr m_imgContainer;
 
-      ImagesContainerBase::ImagesContainerBasePtr m_imgContainer;
-
   public:
       ImageFactory(libCZI::PixelType pixel_type_, size_t pixels_in_all_images_)
           :m_imgContainer(ImagesContainerBase::getTypedAsBase(pixel_type_, pixels_in_all_images_)) { }

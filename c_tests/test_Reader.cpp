@@ -348,6 +348,7 @@ TEST_CASE_METHOD(CziBgrCreator, "test_bgr_flatten", "[Reader_read_flatten_bgr]")
     }
 
     pylibczi::Reader::Shape shapeAns{{'T', 1}, {'C', 3}, {'Y', 624}, {'X', 924}};
+    // pylibczi::Reader::Shape shapeAns{{'T', 1}, {'Y', 624}, {'X', 924}};
 
     REQUIRE(shape==shapeAns);
     REQUIRE(pr.front()->pixelType()==libCZI::PixelType::Gray8);
@@ -453,6 +454,7 @@ TEST_CASE_METHOD(CziBgrCreator2, "test_bgr2_flatten", "[Reader_read_flatten_bgr2
     }
 
     pylibczi::Reader::Shape shapeAns{{'S', 1}, {'C', 3}, {'Y', 81}, {'X', 147}};
+    // pylibczi::Reader::Shape shapeAns{{'S', 1}, {'C', 1}, {'Y', 81}, {'X', 147}};
     REQUIRE(shape==shapeAns);
     REQUIRE(pr.front()->pixelType()==libCZI::PixelType::Gray8);
     // pb_helpers::packArray(pr.first);
@@ -466,6 +468,7 @@ TEST_CASE_METHOD(CziBgrCreator2, "test_bgr_7channel", "[Reader_bgr_7channel]")
     auto images = imCont.first->images();
     auto shape = imCont.second;
     pylibczi::Reader::Shape shapeAns{{'S', 1}, {'C', 21}, {'Y', 81}, {'X', 147}};
+    // pylibczi::Reader::Shape shapeAns{{'S', 1}, {'C', 7}, {'Y', 81}, {'X', 147}};
     REQUIRE( shape==shapeAns);
 }
 
