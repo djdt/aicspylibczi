@@ -88,8 +88,6 @@ namespace pylibczi {
       libCZI::PixelType m_pixelType;
       bool m_specifyScene;
 
-      std::mutex m_mutex;
-
   public:
       using SubblockIndexVec = std::vector<std::pair<SubblockSortable, int> >;
       using DimIndexRangeMap = std::map<DimIndex, std::pair<int, int> >;
