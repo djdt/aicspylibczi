@@ -164,11 +164,10 @@ TEST_CASE_METHOD(CziCreator, "test_read_selected", "[Reader_read_selected]")
 TEST_CASE_METHOD(CziCreator2, "test_read_selected2", "[Reader_read_selected]")
 {
     auto czi = get();
-    auto cDims = libCZI::CDimCoordinate{{libCZI::DimensionIndex::B, 0},
-                                        {libCZI::DimensionIndex::C, 0}};
+    auto cDims = libCZI::CDimCoordinate{};
     auto imCont = czi->readSelected(cDims);
     auto imvec = imCont.first->images();
-    REQUIRE(imvec.size()==15);
+    REQUIRE(imvec.size()==45);
     auto shape = imvec.front()->shape();
     REQUIRE(shape[0]==325); // height
     REQUIRE(shape[1]==475); // width

@@ -41,7 +41,12 @@ PYBIND11_MODULE(_aicspylibczi, m)
         .def("read_dims_sizes", &pylibczi::Reader::dimSizes)
         .def("read_scene_wh", &pylibczi::Reader::getSceneYXSize)
         .def("read_meta", &pylibczi::Reader::readMeta)
-        .def("read_selected", &pylibczi::Reader::readSelected)
+        .def("read_selected", [](pylibczi::Reader &reader_, libCZI::CDimCoordinate& plane_coord_, int index_m_){
+            pybind11::gil_scoped_release release;
+            auto x = reader_.readSelected(plane_coord_, index_m_);
+            pybind11::gil_scoped_acquire acquire;
+            return x;
+        })  // &pylibczi::Reader::readSelected)
         .def("mosaic_shape", &pylibczi::Reader::mosaicShape)
         .def("read_meta_from_subblock", &pylibczi::Reader::readSubblockMeta)
         .def("read_rect_from_subblock", &pylibczi::Reader::readSubblockRect)

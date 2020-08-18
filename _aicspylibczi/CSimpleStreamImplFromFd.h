@@ -19,6 +19,7 @@ namespace pb_helpers {
   class CSimpleStreamImplFromFd: public libCZI::IStream {
   private:
       FILE* m_fp;
+      std::mutex m_mutex;
   public:
       CSimpleStreamImplFromFd() = delete;
       explicit CSimpleStreamImplFromFd(int file_descriptor_);

@@ -1,6 +1,8 @@
 #ifndef _PYLIBCZI_IMAGEFACTORY_H
 #define _PYLIBCZI_IMAGEFACTORY_H
 
+#include <mutex>
+
 #include "Image.h"
 #include "ImagesContainer.h"
 #include "TypedImage.h"
@@ -50,8 +52,8 @@ namespace pylibczi {
       }
 
       std::shared_ptr<Image>
-      constructImage(const std::shared_ptr<libCZI::IBitmapData>& bitmap_ptr_, const libCZI::CDimCoordinate* plane_coordinate_,
-          libCZI::IntRect box_, size_t mem_index_, int index_m_);
+      constructImage(const std::shared_ptr<libCZI::IBitmapData>& bitmap_ptr_, libCZI::IntSize size_,
+          const libCZI::CDimCoordinate* plane_coordinate_, libCZI::IntRect box_, size_t mem_index_, int index_m_);
 
       vector<std::pair<char, size_t>> getFixedShape(void);
   };

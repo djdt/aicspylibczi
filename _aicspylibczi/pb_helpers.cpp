@@ -31,7 +31,7 @@ namespace pb_helpers {
       }
       return charSizes;
   }
-  
+
   py::array packArray(pylibczi::ImagesContainerBase::ImagesContainerBasePtr &base_ptr_)
   {
       pylibczi::ImagesContainerBase *icBase = base_ptr_.release();
@@ -56,6 +56,8 @@ namespace pb_helpers {
       case libCZI::PixelType::Bgr96Float:
           arr = memoryToNpArray<float>(icBase, charSizes);
           break;
+      default:
+          throw pylibczi::PixelTypeException(icBase->pixelType(), "Unsuported pixel type in helper function.");
       }
       return *arr;
   }

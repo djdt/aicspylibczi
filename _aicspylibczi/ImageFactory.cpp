@@ -103,20 +103,25 @@ namespace pylibczi {
   }
 
   std::shared_ptr<Image>
-  ImageFactory::constructImage(const std::shared_ptr<libCZI::IBitmapData>& bitmap_ptr_,
+  ImageFactory::constructImage(const std::shared_ptr<libCZI::IBitmapData>& bitmap_ptr_, libCZI::IntSize size_,
       const libCZI::CDimCoordinate* plane_coordinate_,
       libCZI::IntRect box_, size_t mem_index_,
       int index_m_)
   {
-      libCZI::IntSize size = bitmap_ptr_->GetSize();
-      PixelType pixelType = bitmap_ptr_->GetPixelType();
+      // libCZI::IntSize size;
+      PixelType pixelType;
+      {
+          //std::lock_guard<std::mutex> guard(m_mutex);
+          //size = bitmap_ptr_->GetSize();
+          pixelType = bitmap_ptr_->GetPixelType();
+      }
 
       std::vector<size_t> shape;
       size_t channels = numberOfChannels(pixelType);
       if (channels==3)
           shape.emplace_back(3);
-      shape.emplace_back(size.h);
-      shape.emplace_back(size.w);
+      shape.emplace_back(size_.h);
+      shape.emplace_back(size_.w);
 
       size_t mem_index = 0;
 
@@ -125,7 +130,7 @@ namespace pylibczi {
           m_imgContainer.get(), mem_index_, index_m_);
       if (image==nullptr)
           throw std::bad_alloc();
-      image->loadImage(bitmap_ptr_, channels);
+      image->loadImage(bitmap_ptr_, size_, channels);
       m_imgContainer->addImage(image);
       return image;
   }

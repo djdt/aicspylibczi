@@ -88,6 +88,8 @@ namespace pylibczi {
       libCZI::PixelType m_pixelType;
       bool m_specifyScene;
 
+      std::mutex m_mutex;
+
   public:
       using SubblockIndexVec = std::vector<std::pair<SubblockSortable, int> >;
       using DimIndexRangeMap = std::map<DimIndex, std::pair<int, int> >;
@@ -200,8 +202,8 @@ namespace pylibczi {
        * @param plane_coord_ A structure containing the Dimension constraints
        * @param index_m_ Is only relevant for mosaic files, if you wish to select one frame.
        */
-      std::pair<ImagesContainerBase::ImagesContainerBasePtr, std::vector<std::pair<char, size_t> > >
-      readSelected(libCZI::CDimCoordinate& plane_coord_, int index_m_ = -1);
+      std::pair<ImagesContainerBase::ImagesContainerBasePtr, std::vector< std::pair<char, size_t> > >
+      readSelected(libCZI::CDimCoordinate& plane_coord_, int index_m_ = -1, unsigned int cores_=3);
 
       /*!
        * @brief provide the subblock metadata in index order consistent with readSelected.

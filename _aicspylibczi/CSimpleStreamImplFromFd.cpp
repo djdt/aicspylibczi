@@ -33,6 +33,7 @@ namespace pb_helpers {
   void
   CSimpleStreamImplFromFd::Read(std::uint64_t offset_, void* data_ptr_, std::uint64_t size_, std::uint64_t* bytes_read_ptr_)
   {
+      std::unique_lock<std::mutex> lck(m_mutex);
 #ifdef _WIN32
       _fseeki64(this->m_fp, offset_, SEEK_SET);
 #else

@@ -22,6 +22,7 @@ namespace pylibczi {
       ImageVector m_images;
       Shape m_shape;
       libCZI::PixelType m_cziPixelType;
+      std::mutex m_mutex;
 
   public:
       static ImagesContainerBasePtr getTypedAsBase(libCZI::PixelType& pixel_type_, size_t pixels_in_all_images_);
@@ -34,7 +35,10 @@ namespace pylibczi {
 
       virtual ~ImagesContainerBase() { }
 
-      void addImage(std::shared_ptr<Image> img_) { m_images.push_back(img_); }
+      void addImage( std::shared_ptr<Image> img_){
+          std:unique_lock<std::mutex> lck(m_mutex);
+          m_images.push_back(img_);
+      }
 
       size_t numberOfImages(void) { return m_images.size(); }
 

@@ -67,7 +67,7 @@ namespace pylibczi {
 
       libCZI::PixelType pixelType() { return m_pixelType; }
 
-      virtual void loadImage(const std::shared_ptr<libCZI::IBitmapData>& bitmap_ptr_, size_t channels_) = 0;
+      virtual void loadImage(const std::shared_ptr<libCZI::IBitmapData>& bitmap_ptr_, libCZI::IntSize size_, size_t channels_) = 0;
 
       ~Image() { }
   };

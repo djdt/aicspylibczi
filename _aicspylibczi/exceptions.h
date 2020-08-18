@@ -25,6 +25,18 @@ namespace pylibczi {
       }
   };
 
+  class ThreadingRequestedCoresException: public std::exception {
+      std::stringstream m_message;
+  public:
+      explicit ThreadingRequestedCoresException(int cores_, int requested_cores_, std::string message_)
+      {
+          m_message << "Requested " << requested_cores_ << " but there are only " << cores_ << "available. "
+                    << message_;
+      }
+
+      const char* what() const noexcept override { return m_message.str().c_str(); }
+  };
+
   class PixelTypeException: public std::exception {
       libCZI::PixelType m_pixelType;
       std::string m_message;
