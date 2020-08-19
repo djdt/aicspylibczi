@@ -38,7 +38,7 @@ namespace pylibczi {
       virtual ~ImagesContainerBase() { }
 
       void addImage( std::shared_ptr<Image> img_){
-          std:unique_lock<std::mutex> lck(m_mutex);
+          std::unique_lock<std::mutex> lck(m_mutex);
           m_images.push_back(img_);
       }
 
