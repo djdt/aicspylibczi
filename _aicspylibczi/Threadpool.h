@@ -39,7 +39,9 @@ namespace pylibczi {
           auto r=p.get_future(); // get the return value before we hand off the task
           {
               std::unique_lock<std::mutex> l(m);
-              work.push_back(std::move(p)); // store the task<R()> as a task<void()>
+              // work.emplace_back(std::move(p));
+              std::packaged_task<void()> p_tmp(std::move(p));
+              work.push_back(std::move(p_tmp)); // emplace_back(std::move(p)); // store the task<R()> as a task<void()>
           }
           v.notify_one(); // wake a thread to work on the task
 
