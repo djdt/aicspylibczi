@@ -1,4 +1,5 @@
 #include "StreamImplLockingRead.h"
+#include <ios>
 #include <thread>
 
 namespace pylibczi {
@@ -9,7 +10,7 @@ namespace pylibczi {
   {
       this->infile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
 #if defined(_WIN32)
-      this->infile.open(filename, ios::binary | ios::in);
+      this->infile.open(filename, std::ios::binary | std::ios::in);
 #else
       // convert the wchar_t to an UTF8-string
       size_t requiredSize = std::wcstombs(nullptr, filename, 0);
