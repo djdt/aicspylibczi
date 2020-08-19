@@ -3,10 +3,8 @@
 
 #include <tuple>
 #include <atomic>
-#include <deque>
 #include <vector>
 #include <thread>
-#include <mutex>
 #include <memory>
 #include <future>
 #include <utility>
@@ -39,7 +37,7 @@ namespace pylibczi {
           auto r=p.get_future(); // get the return value before we hand off the task
           {
               std::unique_lock<std::mutex> l(m);
-              work.push_back({}); // store the task<R()> as a task<void()>
+              work.emplace_back(std::move(p)); // store the task<R()> as a task<void()>
           }
           v.notify_one(); // wake a thread to work on the task
 
@@ -77,7 +75,7 @@ namespace pylibczi {
           {
               std::unique_lock<std::mutex> l(m);
               for(auto&&unused:finished){
-                  work.emplace_back();
+                  work.push_back({});
               }
           }
           v.notify_all();
