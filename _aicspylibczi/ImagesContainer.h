@@ -6,6 +6,8 @@
 #define _AICSPYLIBCZI_IMAGESCONTAINER_H
 
 #include <memory>
+#include <mutex>
+#include <thread>
 
 #include "Image.h"
 

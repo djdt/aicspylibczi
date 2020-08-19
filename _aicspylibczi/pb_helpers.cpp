@@ -5,7 +5,6 @@
 #include <set>
 
 #include "pb_helpers.h"
-#include "Image.h"
 #include "Reader.h"
 #include "exceptions.h"
 

@@ -7,6 +7,7 @@
 
 #include <cstdio>
 #include <cstdint>
+#include <mutex>
 #include "inc_libCZI.h"
 
 namespace pb_helpers {

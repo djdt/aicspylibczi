@@ -3,7 +3,7 @@
 //
 
 #include <fcntl.h>
-
+#include <thread>
 #include "CSimpleStreamImplFromFd.h"
 #include "exceptions.h"
 

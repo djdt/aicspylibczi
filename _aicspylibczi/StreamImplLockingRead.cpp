@@ -1,4 +1,5 @@
 #include "StreamImplLockingRead.h"
+#include <thread>
 
 namespace pylibczi {
 
