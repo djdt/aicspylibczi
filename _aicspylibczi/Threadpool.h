@@ -3,9 +3,11 @@
 
 #include <tuple>
 #include <atomic>
+#include <deque>
 #include <vector>
 #include <thread>
 #include <memory>
+#include <mutex>
 #include <future>
 #include <utility>
 #include <stdexcept>
