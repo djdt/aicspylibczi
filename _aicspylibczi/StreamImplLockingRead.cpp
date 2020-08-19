@@ -31,7 +31,7 @@ namespace pylibczi {
       this->infile.read((char*) pv, size);
       if (ptrBytesRead!=nullptr) {
           *ptrBytesRead = this->infile.gcount();
-          assert(*ptrBytesRead==size);
+          // assert(*ptrBytesRead==size);
       }
   }
 
