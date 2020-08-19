@@ -22,7 +22,7 @@ namespace pylibczi {
       std::mutex m;
       std::condition_variable v;
       // note that a packaged_task<void> can store a packaged_task<R>:
-      std::deque<std::packaged_task<void()>> work;
+      std::deque<std::packaged_task<bool()>> work;
 
       // this holds futures representing the worker threads being done:
       std::vector<std::future<void>> finished;
@@ -40,8 +40,7 @@ namespace pylibczi {
           {
               std::unique_lock<std::mutex> l(m);
               // work.emplace_back(std::move(p));
-              std::packaged_task<void()> p_tmp(std::move(p));
-              work.push_back(std::move(p_tmp)); // emplace_back(std::move(p)); // store the task<R()> as a task<void()>
+              work.push_back(std::move(p)); // emplace_back(std::move(p)); // store the task<R()> as a task<void()>
           }
           v.notify_one(); // wake a thread to work on the task
 
@@ -93,7 +92,7 @@ namespace pylibczi {
       void thread_task() {
           while(true){
               // pop a task off the queue:
-              std::packaged_task<void()> f;
+              std::packaged_task<bool()> f;
               {
                   // usual thread-safe queue code:
                   std::unique_lock<std::mutex> l(m);
