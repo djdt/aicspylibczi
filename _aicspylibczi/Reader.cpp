@@ -2,7 +2,6 @@
 #include <tuple>
 #include <set>
 #include <utility>
-#include <unistd.h>
 
 #include "inc_libCZI.h"
 #include "Reader.h"
