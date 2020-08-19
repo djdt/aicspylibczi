@@ -3,8 +3,10 @@
 
 #include <tuple>
 #include <atomic>
+#include <deque>
 #include <vector>
 #include <thread>
+#include <mutex>
 #include <memory>
 #include <future>
 #include <utility>
@@ -75,7 +77,7 @@ namespace pylibczi {
           {
               std::unique_lock<std::mutex> l(m);
               for(auto&&unused:finished){
-                  work.push_back({});
+                  work.emplace_back();
               }
           }
           v.notify_all();
