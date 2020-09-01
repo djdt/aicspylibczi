@@ -13,10 +13,8 @@ from pathlib import Path
 from typing import Callable, List
 
 import czifile
-import imageio
 import numpy as np
 import psutil
-import tifffile
 from quilt3 import Package
 from tqdm import tqdm
 
@@ -104,15 +102,18 @@ def _run_benchmark(
     files = []
     for ext in extensions:
         files += list(resources_dir.glob(ext))
+        files += list(Path("/Users/jamies/Data").glob(ext))
 
     # Run reads for each file and store details in results
+    aics_czi_reader = lambda file: ( aics.CziFile(file).read_image(S=0) )
     results = []
     for file in files:
-        info_read = aics.CziFile(file)
-        yx_planes = np.prod(info_read.size("STCZ"))
-        for reader in [aics.imread, non_aics_reader]:
+        print(file)
+        yx_planes = np.prod(aics.CziFile(file).size[:-2]) #info_read.size("STCZ"))
+        for reader in [aics_czi_reader, non_aics_reader]:
             reader_path = f"{reader.__module__}.{reader.__name__}"
             for i in tqdm(range(iterations), desc=f"{reader_path}: {file.name}"):
+                reader(str(file))  # warmup run
                 start = time.perf_counter()
                 reader(str(file))
                 results.append(
@@ -120,7 +121,7 @@ def _run_benchmark(
                         "file_name": file.name,
                         "file_size_gb": file.stat().st_size / 10e8,
                         "reader": (
-                            "aics" if "aics" in reader_path else "other"
+                            "other" if "czifile" in reader_path else "aics"
                         ),
                         "yx_planes": int(yx_planes),
                         "read_duration": time.perf_counter() - start,
@@ -150,77 +151,75 @@ def run_benchmarks(args: Args):
     all_results = {}
 
     # Try running the benchmarks
-    try:
-        # Get benchmark resources dir
-        resources_dir = Path().parent.parent / "aics" / "tests" / "resources"
+    #try:
+    # Get benchmark resources dir
+    resources_dir = Path().resolve().parent / "aicspylibczi" / "tests" / "resources"
+    print(resources_dir.resolve())
+    # Store machine config
+    _ = {
+        "platform": platform.system(),
+        "platform_version": platform.version(),
+        "architecture": platform.machine(),
+        "cpu_total_count": psutil.cpu_count(),
+        "cpu_current_utilization": psutil.cpu_percent(),
+        "memory_total_gb": psutil.virtual_memory().total / 10e8,
+        "memory_available_gb": psutil.virtual_memory().available / 10e8,
+    }
 
-        # Store machine config
-        _ = {
-            "platform": platform.system(),
-            "platform_version": platform.version(),
-            "architecture": platform.machine(),
-            "cpu_total_count": psutil.cpu_count(),
-            "cpu_current_utilization": psutil.cpu_percent(),
-            "memory_total_gb": psutil.virtual_memory().total / 10e8,
-            "memory_available_gb": psutil.virtual_memory().available / 10e8,
-        }
+    # Store python config
+    pyversion = sys.version_info
+    _ = {
+        "python_version": f"{pyversion.major}.{pyversion.minor}.{pyversion.micro}",
+        "aicspylibczi": aics.__version__,
+        "czifile": czifile.__version__,
+    }
 
-        # Store python config
-        pyversion = sys.version_info
-        _ = {
-            "python_version": f"{pyversion.major}.{pyversion.minor}.{pyversion.micro}",
-            "aics": aics.__version__,
-            "czifile": czifile.__version__,
-            "imageio": imageio.__version__,
-            "tifffile": tifffile.__version__,
-        }
+    # Run tests
+    #######################################################################
 
-        # Run tests
-        #######################################################################
+    log.info(f"Running tests: no cluster...")
+    log.info(f"=" * 80)
 
-        log.info(f"Running tests: no cluster...")
-        log.info(f"=" * 80)
+    all_results["no-cluster"] = _run_benchmark_suite(resources_dir=resources_dir)
 
-        all_results["no-cluster"] = _run_benchmark_suite(resources_dir=resources_dir)
+    #######################################################################
 
-        #######################################################################
+        # Create or get log dir
+        # Do not include ms
+    log_dir_name = datetime.now().isoformat().split(".")[0]
+    log_dir = Path(f".dask_logs/{log_dir_name}").expanduser()
+    # Log dir settings
+    log_dir.mkdir(parents=True, exist_ok=True)
 
-            # Create or get log dir
-            # Do not include ms
-        log_dir_name = datetime.now().isoformat().split(".")[0]
-        log_dir = Path(f".dask_logs/{log_dir_name}").expanduser()
-        # Log dir settings
-        log_dir.mkdir(parents=True, exist_ok=True)
+    #######################################################################
 
-        #######################################################################
+    log.info(f"Completed all tests")
+    log.info(f"=" * 80)
 
-        log.info(f"Completed all tests")
-        log.info(f"=" * 80)
+    # Ensure save dir exists and save results
+    args.save_path.parent.mkdir(parents=True, exist_ok=True)
+    with open(args.save_path, "w") as write_out:
+        json.dump(all_results, write_out)
 
-        # Ensure save dir exists and save results
-        args.save_path.parent.mkdir(parents=True, exist_ok=True)
-        with open(args.save_path, "w") as write_out:
-            json.dump(all_results, write_out)
-
-        # Construct and push package
-        if args.upload:
-            p = Package()
-            p.set("results.json", args.save_path)
-            p.push(
-                "aics/benchmarks",
-                "s3://aics-modeling-packages-test-resources",
-                message=f"aics version: {aics.__version__}",
-            )
+    # # Construct and push package
+    # if args.upload:
+    #     p = Package()
+    #     p.set("results.json", args.save_path)
+    #     p.push(
+    #         "aics/benchmarks",
+    #         "s3://aics-modeling-packages-test-resources",
+    #         message=f"aics version: {aics.__version__}",
+    #     )
 
     # Catch any exception
-    except Exception as e:
-        log.error("=============================================")
-        if args.debug:
-            log.error("\n\n" + traceback.format_exc())
-            log.error("=============================================")
-        log.error("\n\n" + str(e) + "\n")
-        log.error("=============================================")
-        sys.exit(1)
+# except Exception as e:
+#     log.error("=============================================")
+#     if args.debug:
+#         log.error("\n\n" + traceback.format_exc())
+#         log.error("=============================================")
+#     log.error("\n\n" + str(e) + "\n")
+#     log.error("=============================================")
+#     sys.exit(1)
 
 
 ###############################################################################
