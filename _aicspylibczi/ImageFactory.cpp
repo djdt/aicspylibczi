@@ -42,7 +42,7 @@ namespace pylibczi {
        [](std::vector<size_t> shape_, PixelType pixel_type_, const libCZI::CDimCoordinate* plane_coordinate_, libCZI::IntRect box_,
            ImagesContainerBase* bptr, size_t mem_index_, int index_m_) {
            auto typedPtr = bptr->getBaseAsTyped<uint32_t>();
-           return std::shared_ptr<TypedImage<uint32_t>>( new TypedImage<uint32_t>(std::move(shape_), pixel_type_,
+           return std::shared_ptr<TypedImage<uint32_t>>(new TypedImage<uint32_t>(std::move(shape_), pixel_type_,
                plane_coordinate_, box_, typedPtr->getPointerAtIndex(mem_index_), index_m_
            ));
        }},
