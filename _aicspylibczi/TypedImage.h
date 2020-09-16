@@ -100,24 +100,21 @@ namespace pylibczi {
   inline void TypedImage<T>::loadImage(const std::shared_ptr<libCZI::IBitmapData>& bitmap_ptr_, libCZI::IntSize size_,
       size_t channels_)
   {
-      // libCZI::IntSize size = bitmap_ptr_->GetSize();
-      {
-          libCZI::ScopedBitmapLockerP lckScoped{bitmap_ptr_.get()};
-          // WARNING do not compute the end of the array by multiplying stride by height, they are both uint32_t and you'll get an overflow for larger images
-          uint8_t* sEnd = static_cast<uint8_t*>(lckScoped.ptrDataRoi)+lckScoped.size;
-          if(m_pixelType == libCZI::PixelType::Gray8 || m_pixelType == libCZI::PixelType::Gray16 || m_pixelType == libCZI::PixelType::Gray32Float)
-            std::memcpy(m_array, lckScoped.ptrDataRoi, lckScoped.size);
-          else {
-              SourceRange<T> sourceRange(channels_, static_cast<T*>(lckScoped.ptrDataRoi), (T*) (sEnd), lckScoped.stride, size_.w);
-              TargetRange<T> targetRange(channels_, size_.w, size_.h, m_array, m_array+length());
-              for (std::uint32_t h = 0; h<bitmap_ptr_->GetHeight(); ++h) {
-                  pairedForEach(sourceRange.strideBegin(h), sourceRange.strideEnd(h), targetRange.strideBegin(h),
-                      [&](std::vector<T*> src_, std::vector<T*> tgt_) {
-                          pairedForEach(src_.begin(), src_.end(), tgt_.begin(), [&](T* s_, T* t_) {
-                              *t_ = *s_;
-                          });
+      libCZI::ScopedBitmapLockerP lckScoped{bitmap_ptr_.get()};
+      // WARNING do not compute the end of the array by multiplying stride by height, they are both uint32_t and you'll get an overflow for larger images
+      uint8_t* sEnd = static_cast<uint8_t*>(lckScoped.ptrDataRoi)+lckScoped.size;
+      if(m_pixelType == libCZI::PixelType::Gray8 || m_pixelType == libCZI::PixelType::Gray16 || m_pixelType == libCZI::PixelType::Gray32Float)
+          std::memcpy(m_array, lckScoped.ptrDataRoi, lckScoped.size);
+      else {
+          SourceRange<T> sourceRange(channels_, static_cast<T*>(lckScoped.ptrDataRoi), (T*) (sEnd), lckScoped.stride, size_.w);
+          TargetRange<T> targetRange(channels_, size_.w, size_.h, m_array, m_array+length());
+          for (std::uint32_t h = 0; h<bitmap_ptr_->GetHeight(); ++h) {
+              pairedForEach(sourceRange.strideBegin(h), sourceRange.strideEnd(h), targetRange.strideBegin(h),
+                  [&](std::vector<T*> src_, std::vector<T*> tgt_) {
+                      pairedForEach(src_.begin(), src_.end(), tgt_.begin(), [&](T* s_, T* t_) {
+                          *t_ = *s_;
                       });
-              }
+                  });
           }
       }
   }

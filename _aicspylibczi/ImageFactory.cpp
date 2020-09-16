@@ -108,13 +108,7 @@ namespace pylibczi {
       libCZI::IntRect box_, size_t mem_index_,
       int index_m_)
   {
-      // libCZI::IntSize size;
-      PixelType pixelType;
-      {
-          //std::lock_guard<std::mutex> guard(m_mutex);
-          //size = bitmap_ptr_->GetSize();
-          pixelType = bitmap_ptr_->GetPixelType();
-      }
+      PixelType pixelType = bitmap_ptr_->GetPixelType();
 
       std::vector<size_t> shape;
       size_t channels = numberOfChannels(pixelType);
@@ -122,8 +116,6 @@ namespace pylibczi {
           shape.emplace_back(3);
       shape.emplace_back(size_.h);
       shape.emplace_back(size_.w);
-
-      size_t mem_index = 0;
 
       auto imageFactoryFunction = s_pixelToImageConstructor[pixelType];
       std::shared_ptr<Image> image = imageFactoryFunction(shape, pixelType, plane_coordinate_, box_,

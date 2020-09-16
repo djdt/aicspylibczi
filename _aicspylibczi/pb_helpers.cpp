@@ -56,7 +56,7 @@ namespace pb_helpers {
           arr = memoryToNpArray<float>(icBase, charSizes);
           break;
       default:
-          throw pylibczi::PixelTypeException(icBase->pixelType(), "Unsuported pixel type in helper function.");
+          throw pylibczi::PixelTypeException(icBase->pixelType(), "Unsupported pixel type in helper function.");
       }
       return *arr;
   }

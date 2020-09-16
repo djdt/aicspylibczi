@@ -207,6 +207,7 @@ namespace pylibczi {
        * @brief provide the subblock metadata in index order consistent with readSelected.
        * @param plane_coord_ A structure containing the Dimension constraints
        * @param index_m_ Is only relevant for mosaic files, if you wish to select one frame.
+       * @param cores_ The number of cores to use to process threads
        * @return a vector of metadata string blocks
        */
       SubblockMetaVec readSubblockMeta(libCZI::CDimCoordinate& plane_coord_, int index_m_ = -1);
