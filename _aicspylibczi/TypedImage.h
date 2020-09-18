@@ -70,13 +70,6 @@ namespace pylibczi {
        */
       void loadImage(const std::shared_ptr<libCZI::IBitmapData>& bitmap_ptr_, libCZI::IntSize size_, size_t channels_) override;
 
-      /*!
-       * @brief return pointers to begin, end for the specific channel in a 3 channel image
-       * @param channel_ to select from the image {0, 1, or 2}
-       * @return a pair of pointers corresponding to begin and end for the channel specified
-       */
-      std::pair<T*, T*> channelPtrs(int channel_);
-
 // TODO Implement set_sort_order() and operator()<
   };
 
@@ -117,19 +110,6 @@ namespace pylibczi {
                   });
           }
       }
-  }
-
-  // TODO: I need to think about how I'm handling BGR images and the memory. I think splitting them off the bat is the
-  // TODO: right thing to do but I'll likely have to come back and fix some of this.
-  template<typename T>
-  inline std::pair<T*, T*>
-  TypedImage<T>::channelPtrs(int channel_)
-  {
-      std::pair<T*, T*> ans;
-      size_t planeSize = std::accumulate(m_shape.rbegin(), --(m_shape.rend()), 1, std::multiplies<size_t>() );
-      ans.first = m_array+channel_*planeSize;
-      ans.second = ans.first+planeSize;
-      return ans;
   }
 
 }
