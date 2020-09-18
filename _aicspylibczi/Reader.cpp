@@ -286,6 +286,10 @@ namespace pylibczi {
                   if (m_pixelType!=info.pixelType)
                       throw PixelTypeException(info.pixelType, "Selected subblocks have inconsistent PixelTypes."
                                                                " You must select subblocks with consistent PixelTypes.");
+                  // the throw above covers a possible edge case which the file has multiple pixel types. If this is
+                  // the case the exception is intentionally sent back to the user to deal with as they will have to
+                  // select subblocks with consistent pixelType. There's no way to know which of the conflicting
+                  // types they wanted.
 
                   auto bitmap = subblock->CreateBitmap();
                   libCZI::IntSize size = bitmap->GetSize();

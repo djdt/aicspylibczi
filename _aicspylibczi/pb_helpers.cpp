@@ -57,6 +57,8 @@ namespace pb_helpers {
           break;
       default:
           throw pylibczi::PixelTypeException(icBase->pixelType(), "Unsupported pixel type in helper function.");
+          // It is highly unlikely the this throw would ever be reached but it's here for completeness. If an unsupported
+          // pixel type were encountered it would throw much eariler in the code.
       }
       return *arr;
   }
