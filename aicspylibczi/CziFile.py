@@ -450,7 +450,8 @@ class CziFile(object):
             m_index = kwargs.get('M')
         return m_index
 
-    def _get_cores_from_kwargs(self, kwargs):
+    @staticmethod
+    def _get_cores_from_kwargs(kwargs):
         cores = multiprocessing.cpu_count() - 1
         if 'cores' in kwargs:
             cores = kwargs.get('cores')
