@@ -84,36 +84,6 @@ TEST_CASE_METHOD(CziCreator, "test_reader_dims_1", "[Reader_Dims]")
     REQUIRE(dimsVec==ans);
 }
 
-/* The file for this test is too large to commit to the repo
-
-class CziCreatorTmp {
-    std::unique_ptr<pylibczi::Reader> m_czi;
-public:
-    CziCreatorTmp()
-        :m_czi(new pylibczi::Reader(L"/allen/aics/assay-dev/MicroscopyData/Melissa/2018/20180211/20180211_M03_001.czi")) { }
-    pylibczi::Reader* get() { return m_czi.get(); }
-};
-
-TEST_CASE_METHOD(CziCreatorTmp, "test_reader_dims_tmp", "[Reader_Dims_tmp]")
-{
-    using DI=pylibczi::DimIndex;
-    pylibczi::Reader::DimsShape ans{
-        {{DI::X, {0, 700}}, {DI::Y, {0, 950}}, {DI::Z, {0, 65}}, {DI::C, {0, 2}}, {DI::B, {0, 1}}, {DI::S, {0, 1}}, {DI::T, {0, 18}}},
-        {{DI::X, {0, 700}}, {DI::Y, {0, 950}}, {DI::Z, {0, 65}}, {DI::C, {0, 2}}, {DI::B, {0, 1}}, {DI::S, {1, 2}}, {DI::T, {0, 17}}},
-        {{DI::X, {0, 700}}, {DI::Y, {0, 950}}, {DI::Z, {0, 65}}, {DI::C, {0, 2}}, {DI::B, {0, 1}}, {DI::S, {2, 3}}, {DI::T, {0, 17}}},
-        {{DI::X, {0, 700}}, {DI::Y, {0, 950}}, {DI::Z, {0, 65}}, {DI::C, {0, 2}}, {DI::B, {0, 1}}, {DI::S, {3, 4}}, {DI::T, {0, 17}}},
-        {{DI::X, {0, 700}}, {DI::Y, {0, 950}}, {DI::Z, {0, 65}}, {DI::C, {0, 2}}, {DI::B, {0, 1}}, {DI::S, {4, 5}}, {DI::T, {0, 17}}},
-        {{DI::X, {0, 700}}, {DI::Y, {0, 950}}, {DI::Z, {0, 65}}, {DI::C, {0, 2}}, {DI::B, {0, 1}}, {DI::S, {5, 6}}, {DI::T, {0, 17}}},
-    };
-    auto czi = get();
-    auto dims = czi->readDimsRange();
-    REQUIRE(!czi->shapeIsConsistent());
-    REQUIRE(dims.size()==6);
-    REQUIRE(dims == ans);
-}
- */
-
-
 TEST_CASE_METHOD(CziCreator, "test_reader_dims_2", "[Reader_Dims_String]")
 {
     auto czi = get();
@@ -219,8 +189,6 @@ TEST_CASE_METHOD(CziCreator2, "test_read_subblock_meta", "[Reader_read_subblock_
     auto test = pb_helpers::packStringArray(metavec);
     int x = 10;
 }
-
-// TODO I need a small file for testing mosaic functionality
 
 class CziMCreator {
     std::unique_ptr<pylibczi::Reader> m_czi;
@@ -350,11 +318,9 @@ TEST_CASE_METHOD(CziBgrCreator, "test_bgr_flatten", "[Reader_read_flatten_bgr]")
     }
 
     pylibczi::Reader::Shape shapeAns{{'T', 1}, {'C', 3}, {'Y', 624}, {'X', 924}};
-    // pylibczi::Reader::Shape shapeAns{{'T', 1}, {'Y', 624}, {'X', 924}};
 
     REQUIRE(shape==shapeAns);
     REQUIRE(pr.front()->pixelType()==libCZI::PixelType::Gray8);
-    // pb_helpers::packArray(pr.first);
 }
 
 TEST_CASE_METHOD(CziMCreator, "test_reader_mosaic_subblockinforect", "[Reader_Mosaic_SubblockInfo_Rect]")
@@ -432,8 +398,6 @@ TEST_CASE_METHOD(CziBgrCreator2, "test_bgr2_read", "[Reader_read_bgr2]")
     REQUIRE(pr.front()->shape()==std::vector<size_t>{3, 81, 147});
     REQUIRE(pr.front()->pixelType()==libCZI::PixelType::Gray8);
     auto c_pair = std::find_if(shape.begin(), shape.end(), [](const std::pair<char, int>& a) { return a.first=='C'; });
-    // REQUIRE(c_pair->first=='C');
-    // REQUIRE(c_pair->second==3);
     // TODO: Figure out how to report channels in BGR Images.
 }
 
@@ -456,10 +420,8 @@ TEST_CASE_METHOD(CziBgrCreator2, "test_bgr2_flatten", "[Reader_read_flatten_bgr2
     }
 
     pylibczi::Reader::Shape shapeAns{{'S', 1}, {'C', 3}, {'Y', 81}, {'X', 147}};
-    // pylibczi::Reader::Shape shapeAns{{'S', 1}, {'C', 1}, {'Y', 81}, {'X', 147}};
     REQUIRE(shape==shapeAns);
     REQUIRE(pr.front()->pixelType()==libCZI::PixelType::Gray8);
-    // pb_helpers::packArray(pr.first);
 }
 
 TEST_CASE_METHOD(CziBgrCreator2, "test_bgr_7channel", "[Reader_bgr_7channel]")
@@ -470,7 +432,6 @@ TEST_CASE_METHOD(CziBgrCreator2, "test_bgr_7channel", "[Reader_bgr_7channel]")
     auto images = imCont.first->images();
     auto shape = imCont.second;
     pylibczi::Reader::Shape shapeAns{{'S', 1}, {'C', 21}, {'Y', 81}, {'X', 147}};
-    // pylibczi::Reader::Shape shapeAns{{'S', 1}, {'C', 7}, {'Y', 81}, {'X', 147}};
     REQUIRE( shape==shapeAns);
 }
 
