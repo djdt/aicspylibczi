@@ -157,7 +157,7 @@ Reader::sceneShape(int scene_index_)
     if (scene_index_<sceneStart || sceneStart+sceneSize<=scene_index_) {
       std::stringstream ss;
       ss << "Scene index " << scene_index_ << " ∉ " << "[" << sceneStart << ", " << sceneStart+sceneSize << ")";
-      throw CDimCoordinatesOverspecifiedException(ss.str().c_str());
+      throw CDimCoordinatesOverspecifiedException(ss.str());
     }
     libCZI::CDimCoordinate cDim{{libCZI::DimensionIndex::S, scene_index_}};
     SubblockSortable sceneToFind(&cDim, -1, false);
@@ -210,19 +210,17 @@ Reader::getAllSceneYXSize(int scene_index_, bool get_all_matches_)
   }
   if(hasScene && !result.empty()) return result;
 
-  libCZI::IntRect lRect;
-  m_czireader->EnumerateSubBlocks([&lRect, &result, get_all_matches_](int index, const libCZI::SubBlockInfo& info) -> bool {
+  m_czireader->EnumerateSubBlocks([&result, get_all_matches_](int index, const libCZI::SubBlockInfo& info) -> bool {
     if (!isPyramid0(info)) return true;
 
-    lRect = info.logicalRect;
-    result.emplace_back(lRect);
+    result.emplace_back(info.logicalRect);
     return get_all_matches_;
   });
   return result;
 }
 
 libCZI::PixelType
-Reader::getFirstPixelType(void)
+Reader::getFirstPixelType()
 {
   libCZI::PixelType pixelType = libCZI::PixelType::Invalid;
   m_czireader->EnumerateSubBlocks([&pixelType](int index_, const libCZI::SubBlockInfo& info_) -> bool {
