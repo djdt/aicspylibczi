@@ -333,6 +333,26 @@
         <span class="n">box</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">reader</span><span class="o">.</span><span class="n">read_scene_wh</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
         <span class="k">return</span> <span class="p">(</span><span class="n">box</span><span class="o">.</span><span class="n">h</span><span class="p">,</span> <span class="n">box</span><span class="o">.</span><span class="n">w</span><span class="p">)</span></div>
 
+<div class="viewcode-block" id="CziFile.mosaic_scene_bounding_boxes"><a class="viewcode-back" href="../../aicspylibczi.html#aicspylibczi.CziFile.CziFile.mosaic_scene_bounding_boxes">[docs]</a>    <span class="k">def</span> <span class="nf">mosaic_scene_bounding_boxes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the bounding boxes of the raw collected data (pyramid 0) from the mosaic czifile.</span>
+<span class="sd">        This retrieves all pyramid 0 bounding boxes if the scene is not defined in the file or if the user</span>
+<span class="sd">        calls the function with the default index value.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        index</span>
+<span class="sd">             the scene index, omit and it defaults to all</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        tuple</span>
+<span class="sd">            List[BoundingBox tuples] for the specified scene</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">bboxes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">reader</span><span class="o">.</span><span class="n">read_mosaic_scene_boxes</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">[(</span><span class="n">bb</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">bb</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">bb</span><span class="o">.</span><span class="n">w</span><span class="p">,</span> <span class="n">bb</span><span class="o">.</span><span class="n">h</span><span class="p">)</span> <span class="k">for</span> <span class="n">bb</span> <span class="ow">in</span> <span class="n">bboxes</span><span class="p">]</span></div>
+
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">size</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>

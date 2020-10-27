@@ -300,6 +300,25 @@ The result for a similarly shaped file but with different number of time-points 
 </dd></dl>
 
 <dl class="method">
+<dt id="aicspylibczi.CziFile.CziFile.mosaic_scene_bounding_boxes">
+<code class="sig-name descname">mosaic_scene_bounding_boxes</code><span class="sig-paren">(</span><em class="sig-param">index: int = -1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicspylibczi/CziFile.html#CziFile.mosaic_scene_bounding_boxes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicspylibczi.CziFile.CziFile.mosaic_scene_bounding_boxes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the bounding boxes of the raw collected data (pyramid 0) from the mosaic czifile.
+This retrieves all pyramid 0 bounding boxes if the scene is not defined in the file or if the user
+calls the function with the default index value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>index</strong> – the scene index, omit and it defaults to all</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>List[BoundingBox tuples] for the specified scene</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
 <dt id="aicspylibczi.CziFile.CziFile.pixel_type">
 <em class="property">property </em><code class="sig-name descname">pixel_type</code><a class="headerlink" href="#aicspylibczi.CziFile.CziFile.pixel_type" title="Permalink to this definition">¶</a></dt>
 <dd><p>The pixelType of the images. If the pixelType is different in the different subblocks it returns Invalid.</p>
@@ -657,6 +676,25 @@ The result for a similarly shaped file but with different number of time-points 
 </dd>
 <dt class="field-even">Return type</dt>
 <dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="aicspylibczi.CziFile.mosaic_scene_bounding_boxes">
+<code class="sig-name descname">mosaic_scene_bounding_boxes</code><span class="sig-paren">(</span><em class="sig-param">index: int = -1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aicspylibczi/CziFile.html#CziFile.mosaic_scene_bounding_boxes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aicspylibczi.CziFile.mosaic_scene_bounding_boxes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the bounding boxes of the raw collected data (pyramid 0) from the mosaic czifile.
+This retrieves all pyramid 0 bounding boxes if the scene is not defined in the file or if the user
+calls the function with the default index value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>index</strong> – the scene index, omit and it defaults to all</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>List[BoundingBox tuples] for the specified scene</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>tuple</p>
 </dd>
 </dl>
 </dd></dl>
