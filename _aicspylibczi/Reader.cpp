@@ -1,3 +1,4 @@
+#include <iterator>
 #include <thread>
 #include <tuple>
 #include <set>
@@ -278,7 +279,11 @@ namespace pylibczi {
       }
       SubblockSortable subblocksToFind(&plane_coord_, index_m_, isMosaic());
       SubblockIndexVec matches = getMatches(subblocksToFind);
-      m_pixelType = matches.front().first.pixelType();
+      int count=0;
+      for(auto x : matches){
+        std::cout << count++ << ":  " << *(x.first.coordinatePtr()) << std::endl;
+      }
+      m_pixelType = matches.begin()->first.pixelType();
       size_t bgrScaling = ImageFactory::numberOfChannels(m_pixelType);
 
       libCZI::IntRect w_by_h = getSceneYXSize();
@@ -329,6 +334,15 @@ namespace pylibczi {
           throw pylibczi::CdimSelectionZeroImagesException(plane_coord_, m_statistics.dimBounds, "No pyramid0 selectable subblocks.");
       }
       auto charShape = imageFactory.getFixedShape();
+      char *memStart = imageFactory.mem_start();
+      ImageVector &imageVector = imageFactory.images();
+      for( int i = 0; i < imageVector.size(); i++){
+        auto shp = imageVector[i]->coordinatePtr();
+        std::cout << "Offset: "
+                  << (int)(imageVector[i]->ptr_address() - memStart)
+                  << "     dims: "
+                  << *shp << std::endl;
+      }
       return std::make_pair(imageFactory.transferMemoryContainer(), charShape);
   }
 
@@ -341,7 +355,7 @@ namespace pylibczi {
       SubblockSortable subBlockToFind(&plane_coord_, index_m_, isMosaic());
       SubblockIndexVec matches = getMatches(subBlockToFind);
 
-      for_each(matches.begin(), matches.end(), [&](SubblockIndexVec::value_type& match_) {
+      for_each(matches.begin(), matches.end(), [&](const SubblockIndexVec::value_type& match_) {
           size_t metaSize = 0;
           auto subblock = m_czireader->ReadSubBlock(match_.second);
           auto sharedPtrString = subblock->GetRawData(libCZI::ISubBlock::Metadata, &metaSize);
@@ -361,7 +375,7 @@ namespace pylibczi {
       if (matches.empty())
           throw CDimCoordinatesOverspecifiedException("The specified dimensions and M-index matched nothing.");
 
-      auto subblk = m_czireader->ReadSubBlock(matches.front().second);
+      auto subblk = m_czireader->ReadSubBlock(matches.begin()->second);
       return subblk->GetSubBlockInfo().logicalRect;
   }
 
@@ -374,7 +388,7 @@ namespace pylibczi {
       m_czireader->EnumerateSubBlocks([&](int index_, const libCZI::SubBlockInfo& info_) -> bool {
           SubblockSortable subInfo(&(info_.coordinate), info_.mIndex, isMosaic(), info_.pixelType);
           if (isPyramid0(info_) && match_==subInfo) {
-              ans.emplace_back(std::pair<SubblockSortable, int>(subInfo, index_));
+              ans.emplace(std::pair<SubblockSortable, int>(subInfo, index_));
           }
           return true; // Enumerate through every subblock
       });
@@ -440,7 +454,7 @@ namespace pylibczi {
       }
       SubblockSortable subBlockToFind(&plane_coord_, -1); // just check that the dims match something ignore that it's a mosaic file
       SubblockIndexVec matches = getMatches(subBlockToFind); // this does the checking
-      m_pixelType = matches.front().first.pixelType();
+      m_pixelType = matches.begin()->first.pixelType();
       size_t bgrScaling = ImageFactory::numberOfChannels(m_pixelType);
       auto accessor = m_czireader->CreateSingleChannelScalingTileAccessor();
 

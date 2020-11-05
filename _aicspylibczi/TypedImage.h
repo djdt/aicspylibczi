@@ -91,6 +91,8 @@ namespace pylibczi {
           size_t channels_) override;
 
       // TODO Implement set_sort_order() and operator()<
+
+      char * ptr_address() override { return ((char *)m_array); }
   };
 
   template<typename T>

@@ -34,6 +34,17 @@ public:
   pylibczi::Reader* get() { return m_czi.get(); }
 };
 
+class CziCreatorOrder
+{
+  std::unique_ptr<pylibczi::Reader> m_czi;
+
+public:
+  CziCreatorOrder()
+    : m_czi(new pylibczi::Reader(L"resources/CD_s_1_t_3_c_2_z_5.czi"))
+  {}
+  pylibczi::Reader* get() { return m_czi.get(); }
+};
+
 class CziCreatorIStream
 {
   std::unique_ptr<pylibczi::Reader> m_czi;
@@ -539,6 +550,15 @@ TEST_CASE_METHOD(CziCreator5,
   assert(ans[2].y == 354924);
   assert(ans[2].w == 256);
   assert(ans[2].h == 256);
+}
+
+TEST_CASE_METHOD(CziCreatorOrder, "test_image_order", "[Reader_image_order]")
+{
+  auto czi = get();
+
+  libCZI::CDimCoordinate dm;
+  auto imCont = czi->readSelected(dm, -1, CORES_FOR_THREADS);
+  assert(true);
 }
 
 #ifdef LOCAL_TEST

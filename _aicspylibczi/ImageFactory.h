@@ -42,6 +42,10 @@ public:
     return std::move(m_imgContainer); // this should empty m_imgContainer
   }
 
+  char *mem_start(void) { return (char *)(m_imgContainer.get()); }
+
+  ImageVector &images() { return m_imgContainer->images(); }
+
   size_t numberOfImages(void) { return m_imgContainer->numberOfImages(); }
 
   static size_t sizeOfPixelType(PixelType pixel_type_);

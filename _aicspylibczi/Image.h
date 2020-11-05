@@ -80,6 +80,8 @@ public:
 
   libCZI::PixelType pixelType() { return m_pixelType; }
 
+  virtual char * ptr_address() = 0;
+
   virtual void loadImage(
     const std::shared_ptr<libCZI::IBitmapData>& bitmap_ptr_,
     libCZI::IntSize size_,
