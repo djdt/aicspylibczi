@@ -278,11 +278,8 @@ namespace pylibczi {
                                                          "for this file, scenes have inconsistent YX shapes!");
       }
       SubblockSortable subblocksToFind(&plane_coord_, index_m_, isMosaic());
+      // SubblockIndexVec is actually a set this is crucial to preserve the image order
       SubblockIndexVec matches = getMatches(subblocksToFind);
-      int count=0;
-      for(auto x : matches){
-        std::cout << count++ << ":  " << *(x.first.coordinatePtr()) << std::endl;
-      }
       m_pixelType = matches.begin()->first.pixelType();
       size_t bgrScaling = ImageFactory::numberOfChannels(m_pixelType);
 
@@ -334,15 +331,8 @@ namespace pylibczi {
           throw pylibczi::CdimSelectionZeroImagesException(plane_coord_, m_statistics.dimBounds, "No pyramid0 selectable subblocks.");
       }
       auto charShape = imageFactory.getFixedShape();
-      char *memStart = imageFactory.mem_start();
       ImageVector &imageVector = imageFactory.images();
-      for( int i = 0; i < imageVector.size(); i++){
-        auto shp = imageVector[i]->coordinatePtr();
-        std::cout << "Offset: "
-                  << (int)(imageVector[i]->ptr_address() - memStart)
-                  << "     dims: "
-                  << *shp << std::endl;
-      }
+      imageVector.sort(); // this sort is mostly cosmetic, putting the imgs in memory order.
       return std::make_pair(imageFactory.transferMemoryContainer(), charShape);
   }
 

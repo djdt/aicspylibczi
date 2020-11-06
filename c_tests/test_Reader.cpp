@@ -558,7 +558,15 @@ TEST_CASE_METHOD(CziCreatorOrder, "test_image_order", "[Reader_image_order]")
 
   libCZI::CDimCoordinate dm;
   auto imCont = czi->readSelected(dm, -1, CORES_FOR_THREADS);
-  assert(true);
+  pylibczi::ImagesContainerBase *icon = imCont.first.get();
+  auto images = icon->images();
+  std::shared_ptr<pylibczi::Image>&last_im = images[0];
+  for_each( imCont.first->images().begin()+1, imCont.first->images().end(), [&last_im](std::shared_ptr<pylibczi::Image>&img){
+    assert( 0 < ((int)(img->ptr_address() - last_im->ptr_address())) );
+    assert( pylibczi::SubblockSortable::aLessThanB( last_im->coordinatePtr(), img->coordinatePtr() ) );
+    last_im = img;
+  });
+
 }
 
 #ifdef LOCAL_TEST
