@@ -9,8 +9,7 @@
 #include "../_aicspylibczi/exceptions.h"
 #include "../_aicspylibczi/pb_helpers.h"
 
-#define CORES_FOR_THREADS                                                      \
-  1 // for local testing increase this but for GH Actions it must be 1
+#define CORES_FOR_THREADS 1 // for local testing increase this but for GH Actions it must be 1
 
 class CziCreator
 {
@@ -53,8 +52,7 @@ public:
   CziCreatorIStream()
     : m_czi()
   {
-    auto fp = std::shared_ptr<libCZI::IStream>(
-      new CSimpleStreamImplCppStreams(L"resources/s_1_t_1_c_1_z_1.czi"));
+    auto fp = std::shared_ptr<libCZI::IStream>(new CSimpleStreamImplCppStreams(L"resources/s_1_t_1_c_1_z_1.czi"));
     m_czi = std::unique_ptr<pylibczi::Reader>(new pylibczi::Reader(fp));
   }
   pylibczi::Reader* get() { return m_czi.get(); }
@@ -68,8 +66,7 @@ class CziCreatorBig
 
 public:
   CziCreatorBig()
-    : m_czi(new pylibczi::Reader(
-        L"/Users/jamies/Data/20190425_S08_001-04-Scene-4-P3-B03.czi"))
+    : m_czi(new pylibczi::Reader(L"/Users/jamies/Data/20190425_S08_001-04-Scene-4-P3-B03.czi"))
   {}
   pylibczi::Reader* get() { return m_czi.get(); }
 };
@@ -123,10 +120,7 @@ TEST_CASE_METHOD(CziCreator, "test_reader_dims_1", "[Reader_Dims]")
 {
   using DI = pylibczi::DimIndex;
   pylibczi::Reader::DimsShape ans{
-    { { DI::X, { 0, 475 } },
-      { DI::Y, { 0, 325 } },
-      { DI::C, { 0, 1 } },
-      { DI::B, { 0, 1 } } },
+    { { DI::X, { 0, 475 } }, { DI::Y, { 0, 325 } }, { DI::C, { 0, 1 } }, { DI::B, { 0, 1 } } },
   };
   auto czi = get();
   auto dimsVec = czi->readDimsRange();
@@ -176,8 +170,7 @@ TEST_CASE_METHOD(CziCreator, "test_meta_reader", "[Reader_read_meta]")
 TEST_CASE_METHOD(CziCreator, "test_read_selected", "[Reader_read_selected]")
 {
   auto czi = get();
-  auto cDims = libCZI::CDimCoordinate{ { libCZI::DimensionIndex::B, 0 },
-                                       { libCZI::DimensionIndex::C, 0 } };
+  auto cDims = libCZI::CDimCoordinate{ { libCZI::DimensionIndex::B, 0 }, { libCZI::DimensionIndex::C, 0 } };
   auto imCont = czi->readSelected(cDims, -1, CORES_FOR_THREADS);
   auto imvec = imCont.first->images();
   REQUIRE(imvec.size() == 1);
@@ -189,8 +182,7 @@ TEST_CASE_METHOD(CziCreator, "test_read_selected", "[Reader_read_selected]")
 TEST_CASE_METHOD(CziCreator2, "test_read_selected2", "[Reader_read_selected]")
 {
   auto czi = get();
-  auto cDims = libCZI::CDimCoordinate{ { libCZI::DimensionIndex::B, 0 },
-                                       { libCZI::DimensionIndex::C, 0 } };
+  auto cDims = libCZI::CDimCoordinate{ { libCZI::DimensionIndex::B, 0 }, { libCZI::DimensionIndex::C, 0 } };
   auto imCont = czi->readSelected(cDims, -1, CORES_FOR_THREADS);
   auto imvec = imCont.first->images();
   REQUIRE(imvec.size() == 15);
@@ -199,9 +191,7 @@ TEST_CASE_METHOD(CziCreator2, "test_read_selected2", "[Reader_read_selected]")
   REQUIRE(shape[1] == 475); // width
 }
 
-TEST_CASE_METHOD(CziCreatorIStream,
-                 "test_read_selected3",
-                 "[Reader_read_selected]")
+TEST_CASE_METHOD(CziCreatorIStream, "test_read_selected3", "[Reader_read_selected]")
 {
   auto czi = get();
   auto cDims = libCZI::CDimCoordinate{ { libCZI::DimensionIndex::C, 0 } };
@@ -213,9 +203,7 @@ TEST_CASE_METHOD(CziCreatorIStream,
   REQUIRE(shape[1] == 475); // width
 }
 
-TEST_CASE_METHOD(CziCreatorIStream,
-                 "test_read_selected4",
-                 "[Reader_read_selected]")
+TEST_CASE_METHOD(CziCreatorIStream, "test_read_selected4", "[Reader_read_selected]")
 {
   auto czi = get();
   auto cDims = libCZI::CDimCoordinate();
@@ -233,17 +221,13 @@ TEST_CASE_METHOD(CziCreator2, "test_bad_scene", "[Reader_read_bad_scene]")
   auto cDims = libCZI::CDimCoordinate{ { libCZI::DimensionIndex::B, 0 },
                                        { libCZI::DimensionIndex::C, 0 },
                                        { libCZI::DimensionIndex::S, 4 } };
-  REQUIRE_THROWS_AS(czi->readSelected(cDims, -1, CORES_FOR_THREADS),
-                    pylibczi::CDimCoordinatesOverspecifiedException);
+  REQUIRE_THROWS_AS(czi->readSelected(cDims, -1, CORES_FOR_THREADS), pylibczi::CDimCoordinatesOverspecifiedException);
 }
 
-TEST_CASE_METHOD(CziCreator2,
-                 "test_read_subblock_meta",
-                 "[Reader_read_subblock_meta]")
+TEST_CASE_METHOD(CziCreator2, "test_read_subblock_meta", "[Reader_read_subblock_meta]")
 {
   auto czi = get();
-  auto cDims = libCZI::CDimCoordinate{ { libCZI::DimensionIndex::B, 0 },
-                                       { libCZI::DimensionIndex::C, 0 } };
+  auto cDims = libCZI::CDimCoordinate{ { libCZI::DimensionIndex::B, 0 }, { libCZI::DimensionIndex::C, 0 } };
   auto metavec = czi->readSubblockMeta(cDims);
   REQUIRE(metavec.size() == 15);
   auto test = pb_helpers::packStringArray(metavec);
@@ -261,9 +245,7 @@ public:
   pylibczi::Reader* get() { return m_czi.get(); }
 };
 
-TEST_CASE_METHOD(CziMCreator,
-                 "test_mosaic_is_mosaic",
-                 "[Reader_mosaic_is_mosaic]")
+TEST_CASE_METHOD(CziMCreator, "test_mosaic_is_mosaic", "[Reader_mosaic_is_mosaic]")
 {
   auto czi = get();
   REQUIRE(czi->isMosaic());
@@ -275,18 +257,14 @@ TEST_CASE_METHOD(CziMCreator, "test_mosaic_dims", "[Reader_mosaic_dims]")
   REQUIRE(czi->dimsString() == std::string("STCZMYX"));
 }
 
-TEST_CASE_METHOD(CziMCreator,
-                 "test_mosaic_dimsSize",
-                 "[Reader_mosaic_dimsSize]")
+TEST_CASE_METHOD(CziMCreator, "test_mosaic_dimsSize", "[Reader_mosaic_dimsSize]")
 {
   auto czi = get();
   std::vector<int> ans{ 1, 1, 1, 1, 2, 624, 924 };
   REQUIRE(czi->dimSizes() == ans);
 }
 
-TEST_CASE_METHOD(CziMCreator,
-                 "test_mosaic_readdims",
-                 "[Reader_mosaic_readdims]")
+TEST_CASE_METHOD(CziMCreator, "test_mosaic_readdims", "[Reader_mosaic_readdims]")
 {
   auto czi = get();
   using DI = pylibczi::DimIndex;
@@ -301,9 +279,7 @@ TEST_CASE_METHOD(CziMCreator,
   REQUIRE(val == ans);
 }
 
-TEST_CASE_METHOD(CziMCreator,
-                 "test_mosaic_readSelected",
-                 "[Reader_mosaic_readSelected]")
+TEST_CASE_METHOD(CziMCreator, "test_mosaic_readSelected", "[Reader_mosaic_readSelected]")
 {
   auto czi = get();
   REQUIRE(czi->dimsString() == std::string("STCZMYX"));
@@ -337,8 +313,7 @@ TEST_CASE_METHOD(CziMCreator, "test_mosaic_throw", "[Reader_mosaic_throw]")
 {
   auto czi = get();
   libCZI::CDimCoordinate c_dims;
-  REQUIRE_THROWS_AS(czi->readMosaic(c_dims),
-                    pylibczi::CDimCoordinatesUnderspecifiedException);
+  REQUIRE_THROWS_AS(czi->readMosaic(c_dims), pylibczi::CDimCoordinatesUnderspecifiedException);
 }
 
 class CziBgrCreator
@@ -364,9 +339,7 @@ TEST_CASE_METHOD(CziBgrCreator, "test_bgr_read", "[Reader_read_bgr]")
   REQUIRE(czi->dimSizes() == ansSize);
 
   using DI = pylibczi::DimIndex;
-  pylibczi::Reader::DimsShape ansDims{
-    { { DI::T, { 0, 1 } }, { DI::Y, { 0, 624 } }, { DI::X, { 0, 924 } } }
-  };
+  pylibczi::Reader::DimsShape ansDims{ { { DI::T, { 0, 1 } }, { DI::Y, { 0, 624 } }, { DI::X, { 0, 924 } } } };
   auto dims = czi->readDimsRange();
   REQUIRE(!dims.empty());
   REQUIRE(dims == ansDims);
@@ -394,22 +367,17 @@ TEST_CASE_METHOD(CziBgrCreator, "test_bgr_flatten", "[Reader_read_flatten_bgr]")
     REQUIRE(x->shape()[2] == 924);
   }
 
-  pylibczi::Reader::Shape shapeAns{
-    { 'T', 1 }, { 'C', 3 }, { 'Y', 624 }, { 'X', 924 }
-  };
+  pylibczi::Reader::Shape shapeAns{ { 'T', 1 }, { 'C', 3 }, { 'Y', 624 }, { 'X', 924 } };
 
   REQUIRE(shape == shapeAns);
   REQUIRE(pr.front()->pixelType() == libCZI::PixelType::Gray8);
 }
 
-TEST_CASE_METHOD(CziMCreator,
-                 "test_reader_mosaic_subblockinforect",
-                 "[Reader_Mosaic_SubblockInfo_Rect]")
+TEST_CASE_METHOD(CziMCreator, "test_reader_mosaic_subblockinforect", "[Reader_Mosaic_SubblockInfo_Rect]")
 {
   auto czi = get();
 
-  std::vector<libCZI::IntRect> answers{ { 0, 0, 924, 624 },
-                                        { 832, 0, 924, 624 } };
+  std::vector<libCZI::IntRect> answers{ { 0, 0, 924, 624 }, { 832, 0, 924, 624 } };
 
   libCZI::CDimCoordinate dm;
   for (int m_index = 0; m_index < 2; m_index++) {
@@ -421,13 +389,10 @@ TEST_CASE_METHOD(CziMCreator,
     REQUIRE(rect.h == answer.h);
   }
   int invalid_m = 2;
-  REQUIRE_THROWS_AS(czi->readSubblockRect(dm, invalid_m),
-                    pylibczi::CDimCoordinatesOverspecifiedException);
+  REQUIRE_THROWS_AS(czi->readSubblockRect(dm, invalid_m), pylibczi::CDimCoordinatesOverspecifiedException);
 }
 
-TEST_CASE_METHOD(CziCreator2,
-                 "test_reader_subblockinforect",
-                 "[Reader_Std_SubblockInfo_Rect]")
+TEST_CASE_METHOD(CziCreator2, "test_reader_subblockinforect", "[Reader_Std_SubblockInfo_Rect]")
 {
   auto czi = get();
 
@@ -446,8 +411,7 @@ TEST_CASE_METHOD(CziCreator2,
   }
 
   libCZI::CDimCoordinate invalid_dim{ { libCZI::DimensionIndex::S, 5 } };
-  REQUIRE_THROWS_AS(czi->readSubblockRect(invalid_dim),
-                    pylibczi::CDimCoordinatesOverspecifiedException);
+  REQUIRE_THROWS_AS(czi->readSubblockRect(invalid_dim), pylibczi::CDimCoordinatesOverspecifiedException);
 }
 
 // Test multichannel BGR
@@ -466,8 +430,7 @@ TEST_CASE_METHOD(CziBgrCreator2, "test_bgr2_read", "[Reader_read_bgr2]")
 {
   auto czi = get();
   libCZI::CDimCoordinate dm =
-    libCZI::CDimCoordinate{ { libCZI::DimensionIndex::B, 0 },
-                            { libCZI::DimensionIndex::C, 4 } };
+    libCZI::CDimCoordinate{ { libCZI::DimensionIndex::B, 0 }, { libCZI::DimensionIndex::C, 4 } };
   auto imgCont = czi->readSelected(dm, -1, CORES_FOR_THREADS);
   auto pr = imgCont.first->images();
   auto shape = imgCont.second;
@@ -477,10 +440,9 @@ TEST_CASE_METHOD(CziBgrCreator2, "test_bgr2_read", "[Reader_read_bgr2]")
   REQUIRE(czi->dimSizes() == ansSize);
 
   using DI = pylibczi::DimIndex;
-  pylibczi::Reader::DimsShape ansDims{ { { DI::S, { 0, 1 } },
-                                         { DI::C, { 0, 7 } },
-                                         { DI::Y, { 0, 81 } },
-                                         { DI::X, { 0, 147 } } } };
+  pylibczi::Reader::DimsShape ansDims{
+    { { DI::S, { 0, 1 } }, { DI::C, { 0, 7 } }, { DI::Y, { 0, 81 } }, { DI::X, { 0, 147 } } }
+  };
   auto dims = czi->readDimsRange();
   REQUIRE(!dims.empty());
   REQUIRE(dims == ansDims);
@@ -488,22 +450,16 @@ TEST_CASE_METHOD(CziBgrCreator2, "test_bgr2_read", "[Reader_read_bgr2]")
   REQUIRE(pr.size() == 1);
   REQUIRE(pr.front()->shape() == std::vector<size_t>{ 3, 81, 147 });
   REQUIRE(pr.front()->pixelType() == libCZI::PixelType::Gray8);
-  auto c_pair =
-    std::find_if(shape.begin(), shape.end(), [](const std::pair<char, int>& a) {
-      return a.first == 'C';
-    });
+  auto c_pair = std::find_if(shape.begin(), shape.end(), [](const std::pair<char, int>& a) { return a.first == 'C'; });
   // TODO: Figure out how to report channels in BGR Images.
 }
 
-TEST_CASE_METHOD(CziBgrCreator2,
-                 "test_bgr2_flatten",
-                 "[Reader_read_flatten_bgr2]")
+TEST_CASE_METHOD(CziBgrCreator2, "test_bgr2_flatten", "[Reader_read_flatten_bgr2]")
 {
   auto czi = get();
 
   auto dims = czi->readDimsRange();
-  libCZI::CDimCoordinate dm =
-    libCZI::CDimCoordinate{ { libCZI::DimensionIndex::C, 4 } };
+  libCZI::CDimCoordinate dm = libCZI::CDimCoordinate{ { libCZI::DimensionIndex::C, 4 } };
   auto imgCont = czi->readSelected(dm, -1, CORES_FOR_THREADS);
   auto pr = imgCont.first->images();
   auto shape = imgCont.second;
@@ -516,9 +472,7 @@ TEST_CASE_METHOD(CziBgrCreator2,
     REQUIRE(x->shape()[2] == 147);
   }
 
-  pylibczi::Reader::Shape shapeAns{
-    { 'S', 1 }, { 'C', 3 }, { 'Y', 81 }, { 'X', 147 }
-  };
+  pylibczi::Reader::Shape shapeAns{ { 'S', 1 }, { 'C', 3 }, { 'Y', 81 }, { 'X', 147 } };
   REQUIRE(shape == shapeAns);
   REQUIRE(pr.front()->pixelType() == libCZI::PixelType::Gray8);
 }
@@ -530,15 +484,11 @@ TEST_CASE_METHOD(CziBgrCreator2, "test_bgr_7channel", "[Reader_bgr_7channel]")
   auto imCont = czi->readSelected(dm, -1, CORES_FOR_THREADS);
   auto images = imCont.first->images();
   auto shape = imCont.second;
-  pylibczi::Reader::Shape shapeAns{
-    { 'S', 1 }, { 'C', 21 }, { 'Y', 81 }, { 'X', 147 }
-  };
+  pylibczi::Reader::Shape shapeAns{ { 'S', 1 }, { 'C', 21 }, { 'Y', 81 }, { 'X', 147 } };
   REQUIRE(shape == shapeAns);
 }
 
-TEST_CASE_METHOD(CziCreator5,
-                 "test_multiscene_mosaic_bboxes",
-                 "[Reader_mosaic_bboxes]")
+TEST_CASE_METHOD(CziCreator5, "test_multiscene_mosaic_bboxes", "[Reader_mosaic_bboxes]")
 {
   auto czi = get();
   auto dSizes = czi->dimSizes();
@@ -558,15 +508,16 @@ TEST_CASE_METHOD(CziCreatorOrder, "test_image_order", "[Reader_image_order]")
 
   libCZI::CDimCoordinate dm;
   auto imCont = czi->readSelected(dm, -1, CORES_FOR_THREADS);
-  pylibczi::ImagesContainerBase *icon = imCont.first.get();
+  pylibczi::ImagesContainerBase* icon = imCont.first.get();
   auto images = icon->images();
-  std::shared_ptr<pylibczi::Image>&last_im = images[0];
-  for_each( imCont.first->images().begin()+1, imCont.first->images().end(), [&last_im](std::shared_ptr<pylibczi::Image>&img){
-    assert( 0 < ((int)(img->ptr_address() - last_im->ptr_address())) );
-    assert( pylibczi::SubblockSortable::aLessThanB( last_im->coordinatePtr(), img->coordinatePtr() ) );
-    last_im = img;
-  });
-
+  std::shared_ptr<pylibczi::Image>& last_im = images[0];
+  for_each(imCont.first->images().begin() + 1,
+           imCont.first->images().end(),
+           [&last_im](std::shared_ptr<pylibczi::Image>& img) {
+             assert(0 < ((int)(img->ptr_address() - last_im->ptr_address())));
+             assert(pylibczi::SubblockSortable::aLessThanB(last_im->coordinatePtr(), img->coordinatePtr()));
+             last_im = img;
+           });
 }
 
 #ifdef LOCAL_TEST
@@ -574,11 +525,10 @@ TEST_CASE_METHOD(CziCreatorOrder, "test_image_order", "[Reader_image_order]")
 TEST_CASE_METHOD(CziCreatorBig, "test_big_czifile", "[Reader_timed_read]")
 {
   auto czi = get();
-  libCZI::CDimCoordinate dm =
-    libCZI::CDimCoordinate{ { libCZI::DimensionIndex::B, 0 },
-                            { libCZI::DimensionIndex::S, 0 },
-                            { libCZI::DimensionIndex::T, 1 },
-                            { libCZI::DimensionIndex::Z, 5 } };
+  libCZI::CDimCoordinate dm = libCZI::CDimCoordinate{ { libCZI::DimensionIndex::B, 0 },
+                                                      { libCZI::DimensionIndex::S, 0 },
+                                                      { libCZI::DimensionIndex::T, 1 },
+                                                      { libCZI::DimensionIndex::Z, 5 } };
 
   std::stringstream info("Dims: ");
   info << czi->dimsString();
@@ -586,9 +536,7 @@ TEST_CASE_METHOD(CziCreatorBig, "test_big_czifile", "[Reader_timed_read]")
   auto dSizes = czi->dimSizes();
 
   std::stringstream dsizes("Shape: {");
-  for_each(dSizes.begin(), dSizes.end(), [&dsizes](const int& x) {
-    dsizes << x << ", ";
-  });
+  for_each(dSizes.begin(), dSizes.end(), [&dsizes](const int& x) { dsizes << x << ", "; });
   dsizes << "}" << std::endl;
   INFO(dsizes.str());
 
@@ -597,11 +545,8 @@ TEST_CASE_METHOD(CziCreatorBig, "test_big_czifile", "[Reader_timed_read]")
   auto done = std::chrono::high_resolution_clock::now();
 
   std::cout << "Duration(milliseconds): "
-            << std::chrono::duration_cast<std::chrono::milliseconds>(done -
-                                                                     start)
-                 .count();
-  REQUIRE(std::chrono::duration_cast<std::chrono::milliseconds>(done - start)
-            .count() < 5050);
+            << std::chrono::duration_cast<std::chrono::milliseconds>(done - start).count();
+  REQUIRE(std::chrono::duration_cast<std::chrono::milliseconds>(done - start).count() < 5050);
 }
 
 TEST_CASE_METHOD(CziCreatorBigM, "test_bigm_czifile", "[Reader_bbox]")
