@@ -502,6 +502,14 @@ TEST_CASE_METHOD(CziCreator5, "test_multiscene_mosaic_bboxes", "[Reader_mosaic_b
   assert(ans[2].h == 256);
 }
 
+TEST_CASE_METHOD(CziCreatorOrder, "test_image_overspeced", "[Reader_image_overspeced]")
+{
+  auto czi = get();
+
+  libCZI::CDimCoordinate dm = { { libCZI::DimensionIndex::C, 3 } };
+  REQUIRE_THROWS_AS(czi->readSelected(dm, -1, CORES_FOR_THREADS), pylibczi::CDimCoordinatesOverspecifiedException);
+}
+
 TEST_CASE_METHOD(CziCreatorOrder, "test_image_order", "[Reader_image_order]")
 {
   auto czi = get();
@@ -514,8 +522,8 @@ TEST_CASE_METHOD(CziCreatorOrder, "test_image_order", "[Reader_image_order]")
   for_each(imCont.first->images().begin() + 1,
            imCont.first->images().end(),
            [&last_im](std::shared_ptr<pylibczi::Image>& img) {
-             assert(0 < ((int)(img->ptr_address() - last_im->ptr_address())));
-             assert(pylibczi::SubblockSortable::aLessThanB(last_im->coordinatePtr(), img->coordinatePtr()));
+             REQUIRE(0 < ((int)(img->ptr_address() - last_im->ptr_address())));
+             REQUIRE(pylibczi::SubblockSortable::aLessThanB(last_im->coordinatePtr(), img->coordinatePtr()));
              last_im = img;
            });
 }
